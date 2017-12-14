@@ -8,10 +8,6 @@ More extensions might be included to expose OpenGL ES 3.1 core features
 in OpenGL 3.1 or 3.2.
 
 How to use this project:
-Download the project into your local machine. Copy it to ./extensions/proposals/
-in KhronosGroup/WebGL.git project.
-Run 'make' at ./extensions filefolder. You will get .html file under different
-extensions filefolder, say ./extensions/proposals/WEBGL_multisample_texture/.
-Then open that .html file with Chrome browser, check it.
+Refer to extensions/README.md to propose new webgl extensions.
 
 Contributions are welcome.
