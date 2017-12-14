@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>WebGL Extension Registry Revisions</title><link href="http://www.khronos.org/registry/webgl/extensions/index.atom" rel="self" type="application/atom+xml"/><link href="http://www.khronos.org/registry/webgl/extensions/" rel="alternate" type="text/html"/><id>http://www.khronos.org/registry/webgl/extensions/index.atom</id><updated>2017-09-14T23:59:59Z</updated><author>
+    <name>WebGL Working Group</name>
+    <email>public_webgl@khronos.org</email>
+  </author><entry><title>OES_texture_float : revision 9</title><link rel="alternate" type="text/html" href="OES_texture_float/"/><id>OES_texture_float/#r=9</id><updated>2017-09-14T23:59:59Z</updated><summary>Clarify behaviors regarding WEBGL_color_buffer_float.
+
+</summary></entry><entry><title>OES_texture_half_float : revision 9</title><link rel="alternate" type="text/html" href="OES_texture_half_float/"/><id>OES_texture_half_float/#r=9</id><updated>2017-09-14T23:59:59Z</updated><summary>Clarify behaviors regarding EXT_color_buffer_half_float.
+
+</summary></entry><entry><title>EXT_color_buffer_half_float : revision 7</title><link rel="alternate" type="text/html" href="EXT_color_buffer_half_float/"/><id>EXT_color_buffer_half_float/#r=7</id><updated>2017-09-14T23:59:59Z</updated><summary>Require RGBA16F to be color-renderable and RGB16F to be optionally color-renderable.
+
+</summary></entry><entry><title>WEBGL_color_buffer_float : revision 10</title><link rel="alternate" type="text/html" href="WEBGL_color_buffer_float/"/><id>WEBGL_color_buffer_float/#r=10</id><updated>2017-09-14T23:59:59Z</updated><summary>Add optional RGB renderability.
+
+</summary></entry><entry><title>WEBGL_compressed_texture_s3tc_srgb : revision 3</title><link rel="alternate" type="text/html" href="WEBGL_compressed_texture_s3tc_srgb/"/><id>WEBGL_compressed_texture_s3tc_srgb/#r=3</id><updated>2017-05-31T23:59:59Z</updated><summary>Moved to community approved after Mozilla voiced support.
+
+</summary></entry><entry><title>EXT_color_buffer_float : revision 8</title><link rel="alternate" type="text/html" href="EXT_color_buffer_float/"/><id>EXT_color_buffer_float/#r=8</id><updated>2017-04-19T23:59:59Z</updated><summary>Allowed these float formats for CopyTexImage2D.
+
+</summary></entry><entry><title>WEBGL_lose_context : revision 14</title><link rel="alternate" type="text/html" href="WEBGL_lose_context/"/><id>WEBGL_lose_context/#r=14</id><updated>2017-02-03T23:59:59Z</updated><summary>Per discussion in working group, document that this extension
+      should destroy the underlying context and all graphics resources.
+
+</summary></entry><entry><title>EXT_float_blend : revision 2</title><link rel="alternate" type="text/html" href="EXT_float_blend/"/><id>EXT_float_blend/#r=2</id><updated>2017-01-03T23:59:59Z</updated><summary>Promoted to draft status after discussion on public_webgl.
+
+</summary></entry><entry><title>WEBGL_get_buffer_sub_data_async : revision 1</title><link rel="alternate" type="text/html" href="WEBGL_get_buffer_sub_data_async/"/><id>WEBGL_get_buffer_sub_data_async/#r=1</id><updated>2016-12-13T23:59:59Z</updated><summary>Initial revision.
+
+</summary></entry><entry><title>WEBGL_compressed_texture_astc : revision 5</title><link rel="alternate" type="text/html" href="WEBGL_compressed_texture_astc/"/><id>WEBGL_compressed_texture_astc/#r=5</id><updated>2016-12-12T23:59:59Z</updated><summary>Moved to community approved after discussion on public_webgl list.
+
+</summary></entry></feed>
