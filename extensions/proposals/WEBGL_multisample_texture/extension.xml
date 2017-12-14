@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<proposal href="proposals/WEBGL_multisample_texture/">
+  <name>WEBGL_multisample_texture</name>
+  <contact>
+    <a href="https://www.khronos.org/webgl/public-mailing-list/">WebGL working group</a> (public_webgl 'at' khronos.org)
+  </contact>
+  <contributors>
+    <contributor>Yunchao He, Intel</contributor>
+    <contributor>Yizhou Jiang, Intel</contributor>
+    <contributor>Members of the WebGL working group</contributor>
+  </contributors>
+
+  <number>k <!-- extension number in registry --></number>
+  <depends>
+    <api version="2.0"/>
+  </depends>
+
+  <overview>
+  <!-- use mirrors if this extension wraps another -->
+    <p>This extension exposes multisample texture to WebGL. Specifically:</p>
+    <ul>
+      <li> Support this new immutable texture type as a target in corresponding API like bindTexture and texParameter. </li>
+      <li> Create storage for multisample texture via the new introduced API texStorage2DMultisample. </li>
+      <li> Query the location of a given sample within the pixel via the new introduced API getMultisample. </li>
+      <li> Provide an explicit control for the multisample sample mask via the new introduced API sampleMask. </li>
+      <li> Provide mechanisms to fetch a specific sample from such a texture in a shader. </li>
+      <li> Attach such textures to FBOs for rendering. </li>
+    </ul>
+
+    <p>Consult the sections below for specific restrictions and uses.
+    </p>
+
+    <features>
+      <feature>
+        <code>sampler2DMS</code>, <code>isampler2DMS</code> and <code>usampler2DMS</code> can be supported in shader to refer to corresponding multisample texture.
+      </feature>
+      <feature>
+        The new added GLenum <code>GL_SAMPLE_MASK</code> can be supported by <code>enable</code>, <code>disable</code> and <code>isEnabled</code>.
+      </feature>
+    </features>
+  </overview>
+  <idl xml:space="preserve">
+[NoInterfaceObject]
+interface WEBGL_multisample_texture {
+  const GLenum GL_SAMPLE_POSITION                     = 0x8E50
+  const GLenum GL_SAMPLE_MASK                         = 0x8E51
+  const GLenum GL_SAMPLE_MASK_VALUE                   = 0x8E52
+  const GLenum GL_TEXTURE_2D_MULTISAMPLE              = 0x9100
+  const GLenum GL_MAX_SAMPLE_MASK_WORDS               = 0x8E59
+  const GLenum GL_MAX_COLOR_TEXTURE_SAMPLES           = 0x910E
+  const GLenum GL_MAX_DEPTH_TEXTURE_SAMPLES           = 0x910F
+  const GLenum GL_MAX_INTEGER_SAMPLES                 = 0x9110
+  const GLenum GL_TEXTURE_BINDING_2D_MULTISAMPLE      = 0x9104
+  const GLenum GL_TEXTURE_SAMPLES                     = 0x9106 // Remove?
+  const GLenum GL_TEXTURE_FIXED_SAMPLE_LOCATIONS      = 0x9107 // Remove?
+  const GLenum GL_SAMPLER_2D_MULTISAMPLE              = 0x9108
+  const GLenum GL_INT_SAMPLER_2D_MULTISAMPLE          = 0x9109
+  const GLenum GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
+
+  void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedSampleLocations);
+  any getMultisample(GLenum pname, GLuint index);
+  void sampleMask(GLuint index, GLbitfield mask);
+};
+  </idl>
+
+  <newfun>
+    <function name="texStorage2DMultisample" type="void">
+      <param name="target" type="GLenum"/>
+      <param name="samples" type="GLsizei"/>
+      <param name="internalformat" type="GLenum"/>
+      <param name="width" type="GLsizei"/>
+      <param name="height" type="GLsizei"/>
+      <param name="fixedSampleLocations" type="GLboolean"/>
+      Establish the data storage, format, dimensions, and number of samples of a multisample texture's image. See glTexStorage2DMultisample at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-8.8">OpenGL ES 3.1 Section 8.8</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glTexStorage2DMultisample.xhtml" class="nonnormative">man page</a>
+      </span>
+      <br/>TODO(yunchao): report specific errors/restrictions if we have for web.
+    </function>
+    <function name="getMultisample" type="any">
+      <param name="pname" type="GLenum"/>
+      <param name="index" type="GLuint"/>
+      Query the location of a given sample within the pixel. See glGetMultisamplefv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-13.2.1">OpenGL ES 3.1 Section 13.2.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetMultisamplefv.xhtml" class="nonnormative">man page</a>
+      </span>
+      <br/>TODO(yunchao): report specific errors/restrictions if we have for web.
+    </function>
+    <function name="sampleMask" type="void">
+      <param name="index" type="GLuint"/>
+      <param name="mask" type="GLbitfield"/>
+      Specify the sample mask value to mask for desired mask of index. See glSampleMaski at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-13.6.3">OpenGL ES 3.1 Section 13.6.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glSampleMaski.xhtml" class="nonnormative">man page</a>
+      </span>
+      <br/>TODO(yunchao): report specific errors/restrictions if we have for web.
+    </function>
+  </newfun>
+
+  <newtok>
+    <function name="getParameter" type="any">
+      <param name="pname" type="GLenum"/>
+      <code>pname</code> accept the following parameters.
+      The return type of this method now depends on the parameter queried.
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>SAMPLE_MASK_VALUE</td><td>GLbitfield</td></tr>
+        <tr><td>MAX_SAMPLE_MASK_WORDS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COLOR_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>MAX_DEPTH_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>MAX_INTEGER_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_BINDING_2D_MULTISAMPLE</td><td>WebGLTexture</td></tr>
+      </table>
+    </function>
+  </newtok>
+
+  <errors>
+    <error>TODO(yunchao): report specific errors/restrictions if we have for web except the APIs listed above. Below is an example for WEBGL_depth_texture.</error>
+    <error>
+      The error <code>INVALID_OPERATION</code> is generated by
+      <code>texImage2D</code> if the <code>format</code> parameter is
+      <code>DEPTH_COMPONENT</code> or <code>DEPTH_STENCIL</code> and the
+      <code>target</code> is
+      <code>TEXTURE_CUBE_MAP_{POSITIVE,NEGATIVE}_{X,Y,Z}</code>.
+    </error>
+  </errors>
+
+  <samplecode xml:space="preserve">
+    <pre>
+    </pre>
+  </samplecode>
+
+  <issues>
+    TODO(yunchao): list specific uses/restrictions if we have for web. Below is an example for WEBGL_depth_texture.
+    <p>
+      As per the ANGLE_depth_texture specification, when a depth
+      texture is sampled, the value is stored into the RED channel.
+      The contents of the GREEN, BLUE and ALPHA channels are
+      implementation dependent. It is therefore recommended to use
+      only the <code>r</code> component of variables in GLSL shaders
+      that are used to reference depth textures.
+    </p>
+  </issues>
+  <history>
+    <revision date="2017/12/23">
+      <change>Initial revision.</change>
+    </revision>
+  </history>
+</proposal>
