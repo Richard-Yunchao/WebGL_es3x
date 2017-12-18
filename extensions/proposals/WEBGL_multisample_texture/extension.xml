@@ -20,13 +20,13 @@
   <!-- use mirrors if this extension wraps another -->
     <p>This extension exposes multisample texture to WebGL. Specifically:</p>
     <ul>
-      <li> Support this new immutable texture type as a target in corresponding APIs like bindTexture and texParameter. </li>
-      <li> Create storage for multisample texture via the new introduced API texStorage2DMultisample. </li>
-      <li> Query the location of a given sample within the pixel via the new introduced API getMultisample. </li>
-      <li> Provide an explicit control for the multisample sample mask via the new introduced API sampleMask. </li>
+      <li> Support this new immutable texture type <code>MULTISAMPLE_TEXTURE</code> as a target in corresponding APIs like <code>bindTexture</code> and <code>texParameter</code>. </li>
+      <li> Create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
+      <li> Query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
+      <li> Provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
       <li> Attach such textures to FBOs for rendering. </li>
-      <li> Fetch a specific sample from such a texture in a shader via a new introduced shader lookup function texelFetch. </li>
-      <li> Query texture dimensions in shader via a new introduced shader lookup function textureSize. </li>
+      <li> Fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
+      <li> Query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
     </ul>
 
     <p>Consult the sections below for specific restrictions and uses.
@@ -37,27 +37,27 @@
         <code>sampler2DMS</code>, <code>isampler2DMS</code> and <code>usampler2DMS</code> can be supported in shader to refer to corresponding multisample texture.
       </feature>
       <feature>
-        The new added GLenum <code>GL_SAMPLE_MASK</code> can be supported by <code>enable</code>, <code>disable</code> and <code>isEnabled</code>.
+        The new added GLenum <code>SAMPLE_MASK</code> can be supported by <code>enable</code>, <code>disable</code> and <code>isEnabled</code>.
       </feature>
     </features>
   </overview>
   <idl xml:space="preserve">
 [NoInterfaceObject]
 interface WEBGL_multisample_texture {
-  const GLenum GL_SAMPLE_POSITION                     = 0x8E50
-  const GLenum GL_SAMPLE_MASK                         = 0x8E51
-  const GLenum GL_SAMPLE_MASK_VALUE                   = 0x8E52
-  const GLenum GL_TEXTURE_2D_MULTISAMPLE              = 0x9100
-  const GLenum GL_MAX_SAMPLE_MASK_WORDS               = 0x8E59
-  const GLenum GL_MAX_COLOR_TEXTURE_SAMPLES           = 0x910E
-  const GLenum GL_MAX_DEPTH_TEXTURE_SAMPLES           = 0x910F
-  const GLenum GL_MAX_INTEGER_SAMPLES                 = 0x9110
-  const GLenum GL_TEXTURE_BINDING_2D_MULTISAMPLE      = 0x9104
-  const GLenum GL_TEXTURE_SAMPLES                     = 0x9106 // Remove?
-  const GLenum GL_TEXTURE_FIXED_SAMPLE_LOCATIONS      = 0x9107 // Remove?
-  const GLenum GL_SAMPLER_2D_MULTISAMPLE              = 0x9108
-  const GLenum GL_INT_SAMPLER_2D_MULTISAMPLE          = 0x9109
-  const GLenum GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
+  const GLenum SAMPLE_POSITION                     = 0x8E50
+  const GLenum SAMPLE_MASK                         = 0x8E51
+  const GLenum SAMPLE_MASK_VALUE                   = 0x8E52
+  const GLenum TEXTURE_2D_MULTISAMPLE              = 0x9100
+  const GLenum MAX_SAMPLE_MASK_WORDS               = 0x8E59
+  const GLenum MAX_COLOR_TEXTURE_SAMPLES           = 0x910E
+  const GLenum MAX_DEPTH_TEXTURE_SAMPLES           = 0x910F
+  const GLenum MAX_INTEGER_SAMPLES                 = 0x9110
+  const GLenum TEXTURE_BINDING_2D_MULTISAMPLE      = 0x9104
+  const GLenum TEXTURE_SAMPLES                     = 0x9106 // Remove?
+  const GLenum TEXTURE_FIXED_SAMPLE_LOCATIONS      = 0x9107 // Remove?
+  const GLenum SAMPLER_2D_MULTISAMPLE              = 0x9108
+  const GLenum INT_SAMPLER_2D_MULTISAMPLE          = 0x9109
+  const GLenum UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
 
   void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedSampleLocations);
   any getMultisample(GLenum pname, GLuint index);
