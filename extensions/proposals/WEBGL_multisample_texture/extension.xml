@@ -20,7 +20,7 @@
   <!-- use mirrors if this extension wraps another -->
     <p>This extension exposes multisample texture to WebGL. Specifically:</p>
     <ul>
-      <li> Support this new immutable texture type <code>MULTISAMPLE_TEXTURE</code> as a target in corresponding APIs like <code>bindTexture</code> and <code>texParameter</code>. </li>
+      <li> Support this new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs like <code>bindTexture</code> and <code>texParameter</code>. </li>
       <li> Create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
       <li> Query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
       <li> Provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
@@ -141,9 +141,9 @@ interface WEBGL_multisample_texture {
     var colorTex = gl.createTexture();
     if (ext !=== NULL)
     {
-      gl.bindTexture(gl.TEXTURE_2D_MULTISAMPLE, colorTex);
-      ext.texStorage2DMultisample(gl.TEXTURE_2D_MULTISAMPLE, 4, gl.RGBA8, 512, 512, gl.TRUE);
-      gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D_MULTISAMPLE, colorTex, 0);
+      gl.bindTexture(ext.TEXTURE_2D_MULTISAMPLE, colorTex);
+      ext.texStorage2DMultisample(ext.TEXTURE_2D_MULTISAMPLE, 4, gl.RGBA8, 512, 512, gl.TRUE);
+      gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, ext.TEXTURE_2D_MULTISAMPLE, colorTex, 0);
     }
     gl.drawElements(...);
     </pre>
