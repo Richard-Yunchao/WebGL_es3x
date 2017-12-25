@@ -18,28 +18,53 @@
 
   <overview>
   <!-- use mirrors if this extension wraps another -->
-    <p>This extension exposes multisample texture to WebGL. Specifically:</p>
+  <p>This extension exposes multisample texture to WebGL.</p>
+  <p> At API side, this extension can</p>
     <ul>
-      <li> Support this new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs like <code>bindTexture</code> and <code>texParameter</code>. </li>
-      <li> Create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
-      <li> Query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
-      <li> Provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
-      <li> Attach such textures to FBOs for rendering. </li>
-      <li> Fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
-      <li> Query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
+      <li> support a new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs as follow:
+        <ul>
+          <li><code>bindTexture</code></li>
+          <li><code>texStorage2DMultisample</code></li>
+          <li><code>texParameter</code></li>
+          <li><code>getTexParameter</code></li>
+          <li><code>framebufferTexture2D</code></li>
+          <li><code>getMultisample</code></li>
+          <li><code>getInternalParameter</code></li>
+        </ul>
+      </li>
+      <li> create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
+      <li> query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
+      <li> provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
+      <li> attach such textures to FBOs for rendering. </li>
+      <li> support a new GLenum <code>SAMPLE_MASK</code> by these APIs as follow to enable, disable or query enable status for sample mask:
+        <ul>
+          <li><code>enable</code></li>
+          <li><code>disable</code></li>
+          <li><code>isEnabled</code></li>
+        </ul>
+      </li>
     </ul>
+  <p> At shader side, this extension can</p>
+    <ul>
+      <li> fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
+      <li> query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
 
-    <p>Consult the sections below for specific restrictions and uses.
-    </p>
-
-    <features>
-      <feature>
-        <code>sampler2DMS</code>, <code>isampler2DMS</code> and <code>usampler2DMS</code> can be supported in shader to refer to corresponding multisample texture.
-      </feature>
-      <feature>
-        The new added GLenum <code>SAMPLE_MASK</code> can be supported by <code>enable</code>, <code>disable</code> and <code>isEnabled</code>.
-      </feature>
-    </features>
+      <li>support these new sampler types as follow in shader to refer to corresponding multisample texture:
+        <ul>
+          <li><code>sampler2DMS</code></li>
+          <li><code>isampler2DMS</code></li>
+          <li><code>usampler2DMS</code></li>
+        </ul>
+      </li>
+      <li>return these new GLenums to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures respectively when the type is queried by <code>getActiveUniform</code>
+        <ul>
+          <li><code>SAMPLER_2D_MULTISAMPLE</code></li>
+          <li><code>INT_SAMPLER_2D_MULTISAMPLE</code></li>
+          <li><code>UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE</code></li>
+        </ul>
+      </li>
+    </ul>
+   <p>Consult the sections below for specific restrictions and uses.</p>
   </overview>
   <idl xml:space="preserve">
 [NoInterfaceObject]
