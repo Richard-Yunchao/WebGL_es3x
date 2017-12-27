@@ -21,22 +21,23 @@
   <p>This extension exposes multisample texture to WebGL.</p>
   <p> At API side, this extension can</p>
     <ul>
-      <li> support a new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs as follow:
+      <li> support a new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs as follows:
         <ul>
           <li><code>bindTexture</code></li>
           <li><code>texStorage2DMultisample</code></li>
           <li><code>texParameter</code></li>
           <li><code>getTexParameter</code></li>
+          <li><code>getTexLevelParameter</code></li>
           <li><code>framebufferTexture2D</code></li>
-          <li><code>getMultisample</code></li>
           <li><code>getInternalParameter</code></li>
         </ul>
       </li>
       <li> create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
       <li> query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
       <li> provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
+      <li> query level-of-detail information of the given pname for the currently bound texture specified by target via the new introduced API <code>getTexLevelParameter</code>. </li>
       <li> attach such textures to FBOs for rendering. </li>
-      <li> support a new GLenum <code>SAMPLE_MASK</code> by these APIs as follow to enable, disable or query enable status for sample mask:
+      <li> support a new GLenum <code>SAMPLE_MASK</code> by these APIs as follows to enable, disable or query enable status for sample mask:
         <ul>
           <li><code>enable</code></li>
           <li><code>disable</code></li>
@@ -49,14 +50,14 @@
       <li> fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
       <li> query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
 
-      <li>support these new sampler types as follow in shader to refer to corresponding multisample texture:
+      <li>support these new sampler types as follows in shader to refer to corresponding multisample texture:
         <ul>
           <li><code>sampler2DMS</code></li>
           <li><code>isampler2DMS</code></li>
           <li><code>usampler2DMS</code></li>
         </ul>
       </li>
-      <li>return these new GLenums to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures respectively when the type is queried by <code>getActiveUniform</code>
+      <li>return these new GLenums as follows to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures respectively when the type is queried by <code>getActiveUniform</code>
         <ul>
           <li><code>SAMPLER_2D_MULTISAMPLE</code></li>
           <li><code>INT_SAMPLER_2D_MULTISAMPLE</code></li>
@@ -78,8 +79,8 @@ interface WEBGL_multisample_texture {
   const GLenum MAX_DEPTH_TEXTURE_SAMPLES           = 0x910F
   const GLenum MAX_INTEGER_SAMPLES                 = 0x9110
   const GLenum TEXTURE_BINDING_2D_MULTISAMPLE      = 0x9104
-  const GLenum TEXTURE_SAMPLES                     = 0x9106 // Remove?
-  const GLenum TEXTURE_FIXED_SAMPLE_LOCATIONS      = 0x9107 // Remove?
+  const GLenum TEXTURE_SAMPLES                     = 0x9106
+  const GLenum TEXTURE_FIXED_SAMPLE_LOCATIONS      = 0x9107
   const GLenum SAMPLER_2D_MULTISAMPLE              = 0x9108
   const GLenum INT_SAMPLER_2D_MULTISAMPLE          = 0x9109
   const GLenum UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
@@ -87,6 +88,7 @@ interface WEBGL_multisample_texture {
   void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedSampleLocations);
   any getMultisample(GLenum pname, GLuint index);
   void sampleMask(GLuint index, GLbitfield mask);
+  any getTexLevelParameter(GLenum target, GLint lod, GLenum pname);
 };
   </idl>
 
@@ -123,6 +125,42 @@ interface WEBGL_multisample_texture {
         <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-13.6.3">OpenGL ES 3.1 Section 13.6.3</a>,
         and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glSampleMaski.xhtml" class="nonnormative">man page</a>
       </span>
+      <br/>TODO(yunchao): report specific errors/restrictions if we have for web.
+    </function>
+    <function name="getTexLevelParameter" type="any">
+      <param name="target" type="GLenum"/>
+      <param name="lod" type="GLint"/>
+      <param name="value" type="GLenum"/>
+	  Query the level-of-detail information of the given pname for the currently bound texture specified by target. See glGetTexLevelParameter{if}v at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-8.10.3">OpenGL ES 3.1 Section 8.10.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetTexLevelParameter.xhtml" class="nonnormative">man page</a>
+      </span>
+      <br/>
+      The requested pname and its return type are given in the following table:
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_FIXED_SAMPLE_LOCATIONS</td><td>GLboolean</td></tr>
+        <tr><td>TEXTURE_WIDTH</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_HEIGHT</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_DEPTH</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_INTERNAL_FORMAT</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_RED_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_GREEN_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_BLUE_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_ALPHA_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_DEPTH_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_STENCIL_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_SHARED_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_RED_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_GREEN_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_BLUE_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_ALPHA_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_DEPTH_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_COMPRESSED</td><td>GLboolean</td></tr>
+      </table>
       <br/>TODO(yunchao): report specific errors/restrictions if we have for web.
     </function>
   </newfun>
