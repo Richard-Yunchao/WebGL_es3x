@@ -18,7 +18,10 @@
 
   <overview>
   <!-- use mirrors if this extension wraps another -->
-  <p>This extension exposes multisample texture to WebGL.</p>
+  <p>This extension exposes multisample texture to WebGL. It is based on
+    <a href="https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_multisample.txt">ARB_texture_multisample</a>
+    , with some revisions to reflect the latest changes in OpenGL 4.3 and OpenGL ES 3.1.
+  </p>
   <p> At API side, this extension can</p>
     <ul>
       <li> support a new immutable texture type <code>TEXTURE_2D_MULTISAMPLE</code> as a target in corresponding APIs as follows:
@@ -214,7 +217,7 @@ interface WEBGL_multisample_texture {
   <samplecode xml:space="preserve">
     <p>Sample from a multisample texture in fragment shader.</p>
     <pre>
-    #version 300 es // or 310 es?
+    #version 300 es
     #extension GL_ARB_texture_multisample : require
     layout(location = 0) out highp vec4 fragColor;
     uniform highp sampler2DMS s2DMS;
