@@ -36,28 +36,15 @@
         </ul>
       </li>
       <li> create storage for multisample texture via the new introduced API <code>texStorage2DMultisample</code>. </li>
+      <li> attach such textures to FBOs for rendering. </li>
       <li> query the location of a given sample within the pixel via the new introduced API <code>getMultisample</code>. </li>
       <li> provide an explicit control for the multisample sample mask via the new introduced API <code>sampleMask</code>. </li>
       <li> query level-of-detail information of the given pname for the currently bound texture specified by target via the new introduced API <code>getTexLevelParameter</code>. </li>
-      <li> attach such textures to FBOs for rendering. </li>
       <li> support a new GLenum <code>SAMPLE_MASK</code> by these APIs as follows to enable, disable or query enable status for sample mask:
         <ul>
           <li><code>enable</code></li>
           <li><code>disable</code></li>
           <li><code>isEnabled</code></li>
-        </ul>
-      </li>
-    </ul>
-  <p> At shader side, this extension can</p>
-    <ul>
-      <li> fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
-      <li> query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
-
-      <li>support these new sampler types as follows in shader to refer to corresponding multisample texture:
-        <ul>
-          <li><code>sampler2DMS</code></li>
-          <li><code>isampler2DMS</code></li>
-          <li><code>usampler2DMS</code></li>
         </ul>
       </li>
       <li>return these new GLenums as follows to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures respectively when the type is queried by <code>getActiveUniform</code>
@@ -67,6 +54,18 @@
           <li><code>UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE</code></li>
         </ul>
       </li>
+    </ul>
+  <p> At shader side, this extension can</p>
+    <ul>
+      <li>support these new sampler types as follows in shader to refer to corresponding multisample texture:
+        <ul>
+          <li><code>sampler2DMS</code></li>
+          <li><code>isampler2DMS</code></li>
+          <li><code>usampler2DMS</code></li>
+        </ul>
+      </li>
+      <li> fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
+      <li> query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
     </ul>
    <p>Consult the sections below for specific restrictions and uses.</p>
   </overview>
