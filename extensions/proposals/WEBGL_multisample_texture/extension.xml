@@ -47,7 +47,7 @@
           <li><code>isEnabled</code></li>
         </ul>
       </li>
-      <li>return these new GLenums as follows to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures respectively when the type is queried by <code>getActiveUniform</code>
+      <li>return these new GLenums as follows to reflect the type of <code>sample2DMS</code>, <code>isampler2DMS</code>, <code>usampler2DMS</code> multisample textures used in shader respectively when the type is queried by <code>getActiveUniform</code>
         <ul>
           <li><code>SAMPLER_2D_MULTISAMPLE</code></li>
           <li><code>INT_SAMPLER_2D_MULTISAMPLE</code></li>
@@ -64,8 +64,8 @@
           <li><code>usampler2DMS</code></li>
         </ul>
       </li>
-      <li> fetch a specific sample from such a texture in a shader via a new introduced shader lookup function <code>texelFetch</code>. </li>
-      <li> query texture dimensions in shader via a new introduced shader lookup function <code>textureSize</code>. </li>
+      <li> fetch a specific sample from such a texture in a shader via shader lookup function <code>texelFetch</code>. </li>
+      <li> query texture dimensions in shader via shader lookup function <code>textureSize</code>. </li>
     </ul>
    <p>Consult the sections below for specific restrictions and uses.</p>
   </overview>
