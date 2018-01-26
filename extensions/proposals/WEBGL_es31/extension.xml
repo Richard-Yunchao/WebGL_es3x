@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<proposal href="proposals/WEBGL_es31/">
+  <name>WEBGL_es31</name>
+  <contact>
+    <a href="https://www.khronos.org/webgl/public-mailing-list/">WebGL working group</a> (public_webgl 'at' khronos.org)
+  </contact>
+  <contributors>
+    <contributor>Yunchao He, Intel</contributor>
+    <contributor>Jiajia Qin, Intel</contributor>
+    <contributor>Yizhou Jiang, Intel</contributor>
+    <contributor>Xinghua Cao, Intel</contributor>
+    <contributor>Jie Chen, Intel</contributor>
+    <contributor>Members of the WebGL working group</contributor>
+  </contributors>
+
+  <number>k <!-- extension number in registry --></number>
+  <depends>
+    <api version="2.0"/>
+  </depends>
+
+  <overview>
+    <!-- use mirrors if this extension wraps another -->
+    <p>This extension exposes OpenGL ES 3.1 features to WebGL.</p>
+    <p>This document mainly list the differences with WebGL 2 and OpenGL ES 3.1.</p>
+  </overview>
+
+  <idl xml:space="preserve">
+[NoInterfaceObject]
+interface WEBGL_es31 {
+  const GLenum  GL_COMPUTE_SHADER                             = 0x91B9  // 7.1 (Table 7.1) shader types
+  const GLenum  GL_MAX_COMPUTE_UNIFORM_BLOCKS                 = 0x91BB  // 7.6.2 uniform blocks
+  const GLenum  GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS            = 0x91BC
+  const GLenum  GL_MAX_COMPUTE_IMAGE_UNIFORMS                 = 0x91BD
+  const GLenum  GL_MAX_COMPUTE_SHARED_MEMORY_SIZE             = 0x8262
+  const GLenum  GL_MAX_COMPUTE_UNIFORM_COMPONENTS             = 0x8263  // 7.6 uniform variables
+  const GLenum  GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS         = 0x8264  // 7.7 atomic counter buffer
+  const GLenum  GL_MAX_COMPUTE_ATOMIC_COUNTERS                = 0x8265
+  const GLenum  GL_MAX_COMBINED_COMPUTE_UNIFORM_COMPONENTS    = 0x8266  // 7.6 uniform variables
+  const GLenum  GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS         = 0x90EB
+  const GLenum  GL_MAX_COMPUTE_WORK_GROUP_COUNT               = 0x91BE
+  const GLenum  GL_MAX_COMPUTE_WORK_GROUP_SIZE                = 0x91BF
+  const GLenum  GL_COMPUTE_WORK_GROUP_SIZE                    = 0x8267
+  const GLenum  GL_DISPATCH_INDIRECT_BUFFER                   = 0x90EE  // 6.1 buffer types
+  const GLenum  GL_DISPATCH_INDIRECT_BUFFER_BINDING           = 0x90EF
+  const GLenum  GL_COMPUTE_SHADER_BIT                         = 0x00000020
+  const GLenum  GL_DRAW_INDIRECT_BUFFER                       = 0x8F3F  // 6.1 buffer types
+  const GLenum  GL_DRAW_INDIRECT_BUFFER_BINDING               = 0x8F43
+  const GLenum  GL_MAX_UNIFORM_LOCATIONS                      = 0x826E
+  const GLenum  GL_FRAMEBUFFER_DEFAULT_WIDTH                  = 0x9310
+  const GLenum  GL_FRAMEBUFFER_DEFAULT_HEIGHT                 = 0x9311
+  const GLenum  GL_FRAMEBUFFER_DEFAULT_SAMPLES                = 0x9313
+  const GLenum  GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS = 0x9314
+  const GLenum  GL_MAX_FRAMEBUFFER_WIDTH                      = 0x9315
+  const GLenum  GL_MAX_FRAMEBUFFER_HEIGHT                     = 0x9316
+  const GLenum  GL_MAX_FRAMEBUFFER_SAMPLES                    = 0x9318
+  const GLenum  GL_UNIFORM                                    = 0x92E1
+  const GLenum  GL_UNIFORM_BLOCK                              = 0x92E2
+  const GLenum  GL_PROGRAM_INPUT                              = 0x92E3  // 7.3.1 program interface
+  const GLenum  GL_PROGRAM_OUTPUT                             = 0x92E4  // 7.3.1 program interface
+  const GLenum  GL_BUFFER_VARIABLE                            = 0x92E5  // 7.3.1 program interface
+  const GLenum  GL_SHADER_STORAGE_BLOCK                       = 0x92E6  // 7.3.1 program interface
+  const GLenum  GL_ATOMIC_COUNTER_BUFFER                      = 0x92C0  // 6.1 buffer types
+  const GLenum  GL_TRANSFORM_FEEDBACK_VARYING                 = 0x92F4
+  const GLenum  GL_ACTIVE_RESOURCES                           = 0x92F5
+  const GLenum  GL_MAX_NAME_LENGTH                            = 0x92F6
+  const GLenum  GL_MAX_NUM_ACTIVE_VARIABLES                   = 0x92F7
+  const GLenum  GL_NAME_LENGTH                                = 0x92F9  // 7.3.1 program interface getProgramResourceiv
+  const GLenum  GL_TYPE                                       = 0x92FA  // 7.3.1
+  const GLenum  GL_ARRAY_SIZE                                 = 0x92FB  // 7.3.1
+  const GLenum  GL_OFFSET                                     = 0x92FC  // 7.3.1
+  const GLenum  GL_BLOCK_INDEX                                = 0x92FD  // 7.3.1
+  const GLenum  GL_ARRAY_STRIDE                               = 0x92FE  // 7.3.1
+  const GLenum  GL_MATRIX_STRIDE                              = 0x92FF  // 7.3.1
+  const GLenum  GL_IS_ROW_MAJOR                               = 0x9300  // 7.3.1
+  const GLenum  GL_ATOMIC_COUNTER_BUFFER_INDEX                = 0x9301  // 7.3.1
+  const GLenum  GL_BUFFER_BINDING                             = 0x9302  // 7.3.1
+  const GLenum  GL_BUFFER_DATA_SIZE                           = 0x9303  // 7.3.1
+  const GLenum  GL_NUM_ACTIVE_VARIABLES                       = 0x9304  // 7.3.1
+  const GLenum  GL_ACTIVE_VARIABLES                           = 0x9305  // 7.3.1
+  const GLenum  GL_REFERENCED_BY_VERTEX_SHADER                = 0x9306  // 7.3.1
+  const GLenum  GL_REFERENCED_BY_FRAGMENT_SHADER              = 0x930A  // 7.3.1
+  const GLenum  GL_REFERENCED_BY_COMPUTE_SHADER               = 0x930B  // 7.3.1
+  const GLenum  GL_TOP_LEVEL_ARRAY_SIZE                       = 0x930C  // 7.3.1
+  const GLenum  GL_TOP_LEVEL_ARRAY_STRIDE                     = 0x930D  // 7.3.1
+  const GLenum  GL_LOCATION                                   = 0x930E  // 7.3.1 program interface getProgramResourceiv
+  const GLenum  GL_VERTEX_SHADER_BIT                          = 0x00000001
+  const GLenum  GL_FRAGMENT_SHADER_BIT                        = 0x00000002
+  const GLenum  GL_ALL_SHADER_BITS                            = 0xFFFFFFFF
+  const GLenum  GL_PROGRAM_SEPARABLE                          = 0x8258  // 7.3 program object
+  const GLenum  GL_ACTIVE_PROGRAM                             = 0x8259
+  const GLenum  GL_PROGRAM_PIPELINE_BINDING                   = 0x825A
+  const GLenum  GL_ATOMIC_COUNTER_BUFFER_BINDING              = 0x92C1
+  const GLenum  GL_ATOMIC_COUNTER_BUFFER_START                = 0x92C2
+  const GLenum  GL_ATOMIC_COUNTER_BUFFER_SIZE                 = 0x92C3
+  const GLenum  GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS          = 0x92CC   // 7.7 atomic counter buffer
+  const GLenum  GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS        = 0x92D0   // 7.7 atomic counter buffer
+  const GLenum  GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS        = 0x92D1   // 7.7 atomic counter buffer
+  const GLenum  GL_MAX_VERTEX_ATOMIC_COUNTERS                 = 0x92D2
+  const GLenum  GL_MAX_FRAGMENT_ATOMIC_COUNTERS               = 0x92D6
+  const GLenum  GL_MAX_COMBINED_ATOMIC_COUNTERS               = 0x92D7
+  const GLenum  GL_MAX_ATOMIC_COUNTER_BUFFER_SIZE             = 0x92D8
+  const GLenum  GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS         = 0x92DC   // 7.7.2 atomic counter buffer bindings
+  const GLenum  GL_ACTIVE_ATOMIC_COUNTER_BUFFERS              = 0x92D9
+  const GLenum  GL_UNSIGNED_INT_ATOMIC_COUNTER                = 0x92DB
+  const GLenum  GL_MAX_IMAGE_UNITS                            = 0x8F38   // 7.10 images
+  const GLenum  GL_MAX_VERTEX_IMAGE_UNIFORMS                  = 0x90CA
+  const GLenum  GL_MAX_FRAGMENT_IMAGE_UNIFORMS                = 0x90CE
+  const GLenum  GL_MAX_COMBINED_IMAGE_UNIFORMS                = 0x90CF
+  const GLenum  GL_IMAGE_BINDING_NAME                         = 0x8F3A
+  const GLenum  GL_IMAGE_BINDING_LEVEL                        = 0x8F3B
+  const GLenum  GL_IMAGE_BINDING_LAYERED                      = 0x8F3C
+  const GLenum  GL_IMAGE_BINDING_LAYER                        = 0x8F3D
+  const GLenum  GL_IMAGE_BINDING_ACCESS                       = 0x8F3E
+  const GLenum  GL_IMAGE_BINDING_FORMAT                       = 0x906E
+  const GLenum  GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT            = 0x00000001  // 7.11 shader memory access
+  const GLenum  GL_ELEMENT_ARRAY_BARRIER_BIT                  = 0x00000002  // 7.11
+  const GLenum  GL_UNIFORM_BARRIER_BIT                        = 0x00000004  // 7.11
+  const GLenum  GL_TEXTURE_FETCH_BARRIER_BIT                  = 0x00000008  // 7.11
+  const GLenum  GL_SHADER_IMAGE_ACCESS_BARRIER_BIT            = 0x00000020  // 7.11
+  const GLenum  GL_COMMAND_BARRIER_BIT                        = 0x00000040  // 7.11
+  const GLenum  GL_PIXEL_BUFFER_BARRIER_BIT                   = 0x00000080  // 7.11
+  const GLenum  GL_TEXTURE_UPDATE_BARRIER_BIT                 = 0x00000100  // 7.11
+  const GLenum  GL_BUFFER_UPDATE_BARRIER_BIT                  = 0x00000200  // 7.11
+  const GLenum  GL_FRAMEBUFFER_BARRIER_BIT                    = 0x00000400  // 7.11
+  const GLenum  GL_TRANSFORM_FEEDBACK_BARRIER_BIT             = 0x00000800  // 7.11
+  const GLenum  GL_ATOMIC_COUNTER_BARRIER_BIT                 = 0x00001000  // 7.11
+  const GLenum  GL_SHADER_STORAGE_BARRIER_BIT                 = 0x00002000  // 7.11
+  const GLenum  GL_ALL_BARRIER_BITS                           = 0xFFFFFFFF  // 7.11 shader memory access
+  const GLenum  GL_IMAGE_2D                                   = 0x904D
+  const GLenum  GL_IMAGE_3D                                   = 0x904E
+  const GLenum  GL_IMAGE_CUBE                                 = 0x9050
+  const GLenum  GL_IMAGE_2D_ARRAY                             = 0x9053
+  const GLenum  GL_INT_IMAGE_2D                               = 0x9058
+  const GLenum  GL_INT_IMAGE_3D                               = 0x9059
+  const GLenum  GL_INT_IMAGE_CUBE                             = 0x905B
+  const GLenum  GL_INT_IMAGE_2D_ARRAY                         = 0x905E
+  const GLenum  GL_UNSIGNED_INT_IMAGE_2D                      = 0x9063
+  const GLenum  GL_UNSIGNED_INT_IMAGE_3D                      = 0x9064
+  const GLenum  GL_UNSIGNED_INT_IMAGE_CUBE                    = 0x9066
+  const GLenum  GL_UNSIGNED_INT_IMAGE_2D_ARRAY                = 0x9069
+  const GLenum  GL_IMAGE_FORMAT_COMPATIBILITY_TYPE            = 0x90C7
+  const GLenum  GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE         = 0x90C8
+  const GLenum  GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS        = 0x90C9
+  const GLenum  GL_READ_ONLY                                  = 0x88B8
+  const GLenum  GL_WRITE_ONLY                                 = 0x88B9
+  const GLenum  GL_READ_WRITE                                 = 0x88BA
+  const GLenum  GL_SHADER_STORAGE_BUFFER                      = 0x90D2  // 6.1 buffer types
+  const GLenum  GL_SHADER_STORAGE_BUFFER_BINDING              = 0x90D3  // 6.7 buffer object state
+  const GLenum  GL_SHADER_STORAGE_BUFFER_START                = 0x90D4  // 6.7 buffer object state
+  const GLenum  GL_SHADER_STORAGE_BUFFER_SIZE                 = 0x90D5  // 6.7 buffer object state
+  const GLenum  GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS           = 0x90D6  // 7.8 shader buffer variables and shader storage blocks
+  const GLenum  GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS         = 0x90DA  // 7.8
+  const GLenum  GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS          = 0x90DB  // 7.8
+  const GLenum  GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS         = 0x90DC  // 7.8
+  const GLenum  GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS         = 0x90DD  // 6.7
+  const GLenum  GL_MAX_SHADER_STORAGE_BLOCK_SIZE              = 0x90DE  // 7.8
+  const GLenum  GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT     = 0x90DF  // 6.7
+  const GLenum  GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES       = 0x8F39
+  const GLenum  GL_DEPTH_STENCIL_TEXTURE_MODE                 = 0x90EA
+  const GLenum  GL_STENCIL_INDEX                              = 0x1901
+  const GLenum  GL_MIN_PROGRAM_TEXTURE_GATHER_OFFSET          = 0x8E5E
+  const GLenum  GL_MAX_PROGRAM_TEXTURE_GATHER_OFFSET          = 0x8E5F
+  const GLenum  GL_SAMPLE_POSITION                            = 0x8E50
+  const GLenum  GL_SAMPLE_MASK                                = 0x8E51
+  const GLenum  GL_SAMPLE_MASK_VALUE                          = 0x8E52
+  const GLenum  GL_TEXTURE_2D_MULTISAMPLE                     = 0x9100
+  const GLenum  GL_MAX_SAMPLE_MASK_WORDS                      = 0x8E59
+  const GLenum  GL_MAX_COLOR_TEXTURE_SAMPLES                  = 0x910E
+  const GLenum  GL_MAX_DEPTH_TEXTURE_SAMPLES                  = 0x910F
+  const GLenum  GL_MAX_INTEGER_SAMPLES                        = 0x9110
+  const GLenum  GL_TEXTURE_BINDING_2D_MULTISAMPLE             = 0x9104
+  const GLenum  GL_TEXTURE_SAMPLES                            = 0x9106
+  const GLenum  GL_TEXTURE_FIXED_SAMPLE_LOCATIONS             = 0x9107
+  const GLenum  GL_TEXTURE_WIDTH                              = 0x1000
+  const GLenum  GL_TEXTURE_HEIGHT                             = 0x1001
+  const GLenum  GL_TEXTURE_DEPTH                              = 0x8071
+  const GLenum  GL_TEXTURE_INTERNAL_FORMAT                    = 0x1003
+  const GLenum  GL_TEXTURE_RED_SIZE                           = 0x805C
+  const GLenum  GL_TEXTURE_GREEN_SIZE                         = 0x805D
+  const GLenum  GL_TEXTURE_BLUE_SIZE                          = 0x805E
+  const GLenum  GL_TEXTURE_ALPHA_SIZE                         = 0x805F
+  const GLenum  GL_TEXTURE_DEPTH_SIZE                         = 0x884A
+  const GLenum  GL_TEXTURE_STENCIL_SIZE                       = 0x88F1
+  const GLenum  GL_TEXTURE_SHARED_SIZE                        = 0x8C3F
+  const GLenum  GL_TEXTURE_RED_TYPE                           = 0x8C10
+  const GLenum  GL_TEXTURE_GREEN_TYPE                         = 0x8C11
+  const GLenum  GL_TEXTURE_BLUE_TYPE                          = 0x8C12
+  const GLenum  GL_TEXTURE_ALPHA_TYPE                         = 0x8C13
+  const GLenum  GL_TEXTURE_DEPTH_TYPE                         = 0x8C16
+  const GLenum  GL_TEXTURE_COMPRESSED                         = 0x86A1
+  const GLenum  GL_SAMPLER_2D_MULTISAMPLE                     = 0x9108
+  const GLenum  GL_INT_SAMPLER_2D_MULTISAMPLE                 = 0x9109
+  const GLenum  GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE        = 0x910A
+  const GLenum  GL_VERTEX_ATTRIB_BINDING                      = 0x82D4
+  const GLenum  GL_VERTEX_ATTRIB_RELATIVE_OFFSET              = 0x82D5
+  const GLenum  GL_VERTEX_BINDING_DIVISOR                     = 0x82D6
+  const GLenum  GL_VERTEX_BINDING_OFFSET                      = 0x82D7
+  const GLenum  GL_VERTEX_BINDING_STRIDE                      = 0x82D8
+  const GLenum  GL_VERTEX_BINDING_BUFFER                      = 0x8F4F
+  const GLenum  GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET          = 0x82D9
+  const GLenum  GL_MAX_VERTEX_ATTRIB_BINDINGS                 = 0x82DA
+  const GLenum  GL_MAX_VERTEX_ATTRIB_STRIDE                   = 0x82E5
+
+  void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
+  void dispatchComputeIndirect(GLintptr indirect);
+
+  void drawArraysIndirect(GLenum mode, const void *indirect);
+  void drawElementsIndirect(GLenum mode, GLenum type, const void *indirect);
+
+  void framebufferParameteri(GLenum target, GLenum pname, GLint param);
+  void getFramebufferParameteriv(GLenum target, GLenum pname, GLint *params);
+
+  void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);  // 7.3.1 program interface
+  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name); // 7.3.1 program interface
+  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+                              GLsizei bufSize, GLsizei *length, GLchar *name);  // 7.3.1 program interface
+  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+                            GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params); // 7.3.1 program interface
+  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);  // 7.3.1 program interface
+
+  void bindProgramPipeline(GLuint pipeline);  // 7.4 program pipeline object
+  void deleteProgramPipelines(GLsizei n, const GLuint *pipelines);  // 7.4 program pipeline object
+  void genProgramPipelines(GLsizei n, GLuint *pipelines);  // 7.4 program pipeline object
+  GLboolean isProgramPipeline(GLuint pipeline);  // 7.4 program pipeline object
+  void getProgramPipelineiv(GLuint pipeline, GLenum pname, GLint *params);  // 7.12 shader, program, and program pipelie queries
+  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);  // 7.4 program pipeline
+  void activeShaderProgram(GLuint pipeline, GLuint program);  // 7.4 program pipeline
+  GLuint createShaderProgramv(GLenum type, GLsizei count, const GLchar *const*strings); // 7.3 program object
+
+  void programUniform1i(GLuint program, GLint location, GLint v0);  // 7.6.1 uniform variables
+  void programUniform2i(GLuint program, GLint location, GLint v0, GLint v1);  // 7.6.1
+  void programUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);  // 7.6.1
+  void programUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);  // 7.6.1
+
+  void programUniform1ui(GLuint program, GLint location, GLuint v0);
+  void programUniform2ui(GLuint program, GLint location, GLuint v0, GLuint v1);
+  void programUniform3ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2);
+  void programUniform4ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
+
+  void programUniform1f(GLuint program, GLint location, GLfloat v0);
+  void programUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
+  void programUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+  void programUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+
+  void programUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+
+  void programUniform1uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform2uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform3uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform4uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+
+  void programUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+
+  void programUniformMatrix2fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);  // 7.6.1 uniform variables
+
+  void validateProgramPipeline(GLuint pipeline);
+  void getProgramPipelineInfoLog(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog); // 7.12
+
+  void bindImageTexture(GLuint unit, GLuint texture, GLint level,
+                        GLboolean layered, GLint layer, GLenum access, GLenum format);
+  void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
+  void memoryBarrier(GLbitfield barriers);  // 7.11 shader memory access
+  void memoryBarrierByRegion(GLbitfield barriers);  // 7.11 shader memory access
+
+  void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
+                               GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
+  void getMultisamplefv(GLenum pname, GLuint index, GLfloat *val);
+  void sampleMaski(GLuint maskNumber, GLbitfield mask);
+
+  void getTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params);
+  void getTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params);
+
+  void bindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
+  void vertexAttribFormat(GLuint attribindex, GLint size, GLenum type,
+                          GLboolean normalized, GLuint relativeoffset);
+  void vertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
+  void vertexAttribBinding(GLuint attribindex, GLuint bindingindex);
+  void vertexBindingDivisor(GLuint bindingindex, GLuint divisor);
+}; // interface WEBGL_es31
+  </idl>
+
+  <h2>New DOM Interface</h2>
+  <!-- New DOM Interface -->
+  <h3>WebGLProgramPipeline</h3>
+
+  <h3>More Binding Point</h3>
+
+  <h3>Getting and Setting State</h3>
+
+    <h3> Attributes</h3>
+    <h3> Setting and getting state</h3>
+    <h3> Buffer Object</h3>
+    <h3> Renderbuffer Object</h3>
+
+  <newfun>
+    <p> <code>Framebuffer Object</code> </p>
+  void framebufferParameteri(GLenum target, GLenum pname, GLint param);
+  void getFramebufferParameteriv(GLenum target, GLenum pname, GLint *params);
+    <function name="FramebufferParameter" type="void">   description </function>
+    <function name="GetFramebufferParameter" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <function name="loseContext" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Texture Object</code> </p>
+  void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
+                               GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
+  void getTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params);
+  void getTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params);
+    <function name="TexStorage2DMultisample" type="void">   description </function>
+    <function name="GetTexLevelParameter" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Sampler Object</code> </p>
+  void getMultisamplefv(GLenum pname, GLuint index, GLfloat *val);
+  void sampleMaski(GLuint maskNumber, GLbitfield mask);
+    <function name="GetMultisamplefv" type="void">   description </function>
+    <function name="SampleMaski" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Programs and Shaders</code> </p>
+  ProgramParameter(GLuint program, GLenum pname, GLint value); -- This one is interesting... ES 3.0 API in fact
+  ?? void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);
+  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name);
+  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+                              GLsizei bufSize, GLsizei *length, GLchar *name);
+  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+                            GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params);
+  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);
+  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);
+  void activeShaderProgram(GLuint pipeline, GLuint program);
+  GLuint createShaderProgramv(GLenum type, GLsizei count, const GLchar *const*strings);
+    <function name="UseProgramStages" type="void">   description </function>
+    <function name="ActiveShaderProgram" type="void">   description </function>
+    <function name="CreateShaderProgramv" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Uniforms and Attributes</code> </p>
+  void programUniform1i(GLuint program, GLint location, GLint v0);
+  void programUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
+  void programUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);
+  void programUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
+
+  void programUniform1ui(GLuint program, GLint location, GLuint v0);
+  void programUniform2ui(GLuint program, GLint location, GLuint v0, GLuint v1);
+  void programUniform3ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2);
+  void programUniform4ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
+
+  void programUniform1f(GLuint program, GLint location, GLfloat v0);
+  void programUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
+  void programUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+  void programUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+
+  void programUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+
+  void programUniform1uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform2uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform3uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform4uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+
+  void programUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+
+  void programUniformMatrix2fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4fv(GLuint program, GLint location, GLsizei count,
+                               GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+  void programUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count,
+                                 GLboolean transpose, const GLfloat *value);
+
+  void bindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
+  void vertexAttribFormat(GLuint attribindex, GLint size, GLenum type,
+                          GLboolean normalized, GLuint relativeoffset);
+  void vertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
+  void vertexAttribBinding(GLuint attribindex, GLuint bindingindex);
+  void vertexBindingDivisor(GLuint bindingindex, GLuint divisor);
+    <function name="ProgramUniform" type="void">   description </function>
+    <function name="ProgramUniformMatrix" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Writing to the drawing buffer</code> </p>
+  ?? void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
+  ?? void dispatchComputeIndirect(GLintptr indirect);
+
+  void drawArraysIndirect(GLenum mode, const void *indirect);
+  void drawElementsIndirect(GLenum mode, GLenum type, const void *indirect);
+    <function name="drawArraysIndirect" type="void">   description </function>
+    <function name="drawElementsIndirect" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Program Interface Query</code> </p>
+  ?? void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);
+  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name);
+  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+                              GLsizei bufSize, GLsizei *length, GLchar *name);
+  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+                            GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params);
+  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);
+    <function name="GetProgramInterfaceiv" type="void">   description </function>
+    <function name="GetProgramResourceiv" type="void">   description </function>
+    <function name="GetProgramResourceName" type="void">   description </function>
+    <function name="GetProgramResourceIndex" type="void">   description </function>
+    <function name="GetProgramResourceLocation" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Program Pipeline Object</code> </p>
+  void bindProgramPipeline(GLuint pipeline);
+  void deleteProgramPipelines(GLsizei n, const GLuint *pipelines);
+  void genProgramPipelines(GLsizei n, GLuint *pipelines);
+  GLboolean isProgramPipeline(GLuint pipeline);
+  void getProgramPipelineiv(GLuint pipeline, GLenum pname, GLint *params);
+
+  void validateProgramPipeline(GLuint pipeline);
+  void getProgramPipelineInfoLog(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+
+  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);
+  void activeShaderProgram(GLuint pipeline, GLuint program);
+    <function name="GenProgramPipelines" type="void">   description </function>
+    <function name="DeleteProgramPipelines" type="void">   description </function>
+    <function name="BindProgramPipeline" type="void">   description </function>
+    <function name="IsProgramPipeline" type="void">   description </function>
+    <function name="ValidateProgramPipeline" type="void">   description </function>
+    <function name="GetProgramPipelineInfoLog" type="void">   description </function>
+    <function name="UseProgramStages" type="void">   description </function>
+    <function name="ActiveShaderProgram" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Image Object</code> </p>
+  void bindImageTexture(GLuint unit, GLuint texture, GLint level,
+                        GLboolean layered, GLint layer, GLenum access, GLenum format);
+  void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
+    <function name="BindImageTexture" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Memory Barrier Object</code> </p>
+  void memoryBarrier(GLbitfield barriers);
+  void memoryBarrierByRegion(GLbitfield barriers);
+    <function name="MemoryBarrior" type="void">   description </function>
+    <function name="MemoryBarriorByRegion" type="void">   description </function>
+  </newfun>
+
+  <newfun>
+    <p> <code>Dispatch Computation</code> </p>
+  ?? void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
+  ?? void dispatchComputeIndirect(GLintptr indirect);
+    <function name="DispatchCompute" type="void">   description </function>
+    <function name="DispatchComputeIndirect" type="void">   description </function>
+  </newfun>
+
+  <!-- new tokens -->
+
+  <newtok>
+    createShader: COMPUTE_SHADER
+    getProgram: PROGRAM_SEPARABLE,
+                COMPUTE_WORK_GROUP_SIZE,
+                ACTIVE_ATOMIC_COUNTER_BUFFERS
+    getParameter and getIndexedParameter:
+                  (see chapter 7.6, atomic counter buffer)
+                  MAX_VERTEX_ATOMIC_COUNTER_BUFFERS,
+                  MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS,
+                  MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS,
+                  MAX_COMBINED_ATOMIC_COUNTER_BUFFERS,
+                  MAX_ATOMIC_COUNTER_BUFFER_BINDINGS,
+
+                  (also see table 6.5 in chapter 6.6.1)
+                  ATOMIC_COUNTER_BUFFER_BINDING
+                  ATOMIC_COUNTER_BUFFER_START
+                  ATOMIC_COUNTER_BUFFER_SIZE
+
+                  SHADER_STORAGE_BUFFER_BINDING
+                  SHADER_STORAGE_BUFFER_START
+                  SHADER_STORAGE_BUFFER_SIZE
+                  BUFFER_OFFSET_ALIGNMENT
+                  MAX_SHADER_STORAGE_BUFFER_BINDINGS
+
+    bindBuffer/bufferData/bufferSubData/getBufferSubData/getBufferParameter
+    (mapBufferRange, flushMappedBufferRange, UnmapBuffer are not exposed to web):
+        ATOMIC_COUNTER_BUFFER
+        DISPATCH_INDIRECT_BUFFER
+        DRAW_INDIRECT_BUFFER
+        SHADER_STORAGE_BUFFER
+    bindBufferRange and bindBufferBase:
+        ATOMIC_COUNTER_BUFFER
+        SHADER_STORAGE_BUFFER
+    BUFFER_ACCESS_FLAGS is not exposed to getBufferParameter, why?
+    We only have BUFFER_USAGE and BUFFER_SIZE via getBufferParameter
+
+    <function name="GetParameter" type="any"> <param name="pname"
+    type="GLenum"/> description  </function>
+    <function name="BindBuffer" type="any"> <param name="pname"
+    type="GLenum"/> description  </function>
+    <function name="CreateShader" type="any"> <param name="pname"
+    type="GLenum"/> description  </function>
+    <function name="GetProgram" type="any"> <param name="pname"
+    type="GLenum"/> description  </function>
+  </newtok>
+
+  <!-- Refer to the <http://www.opengl.org/registry/doc/template.txt> OpenGL
+       extension template for a description of these sections. These sections
+       should be eliminated for WebGL extensions simply mirroring OpenGL or
+       OpenGL ES extensions.
+  -->
+
+  <!-- these take   markup as contents -->
+
+
+  <!-- Additions to the WebGL Specification -->
+
+
+  <!-- New Implementation-Dependent State -->
+
+  <diffwebgl2>
+ <p>This extension can support GLSL ES 310</p>
+
+  </diffwebgl2>
+
+  <diffes31>
+ <p>The image in shader</p>
+
+  </diffes31>
+
+  <samplecode>
+ <p>XXX IGNORE THIS SAMPLE CODE. IT HAS NOT YET BEEN UPDATED TO MATCH THE
+    NEW SPEC TEXT. XXX</p>
+
+  </samplecode>
+
+  <history>
+    <!-- a list of revisions in any order -->
+
+    <!-- Include important changes in the evolution of the extension. It's
+         especially important to include this section if the extension is modified
+         after a version has been shipped. Consult the
+         <http://www.opengl.org/registry/doc/template.txt> OpenGL extension template
+         for an example.
+    -->
+
+    <revision date="2018/2/21">
+      <!-- a list of changes -->
+
+      <change>This initial version</change>
+
+    </revision>
+  </history>
+</proposal>

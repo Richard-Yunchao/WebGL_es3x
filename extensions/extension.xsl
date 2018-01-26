@@ -143,6 +143,16 @@
         <xsl:copy-of select="additions/node()" />
       </xsl:if>
 
+      <xsl:if test="diffwebgl2">
+        <h2 class="no-toc">Differences with WebGL 2 Specification</h2>
+        <xsl:copy-of select="diffwebgl2/node()" />
+      </xsl:if>
+
+      <xsl:if test="diffes31">
+        <h2 class="no-toc">Differences with OpenGL ES 3.1 Specification</h2>
+        <xsl:copy-of select="diffes31/node()" />
+      </xsl:if>
+
       <xsl:if test="errors">
         <h2 class="no-toc">Errors</h2>
         <xsl:for-each select="errors/error">
