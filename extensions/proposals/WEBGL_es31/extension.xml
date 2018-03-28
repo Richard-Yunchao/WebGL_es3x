@@ -6,11 +6,7 @@
     <a href="https://www.khronos.org/webgl/public-mailing-list/">WebGL working group</a> (public_webgl 'at' khronos.org)
   </contact>
   <contributors>
-    <contributor>Yunchao He, Intel</contributor>
-    <contributor>Jiajia Qin, Intel</contributor>
-    <contributor>Yizhou Jiang, Intel</contributor>
-    <contributor>Xinghua Cao, Intel</contributor>
-    <contributor>Jie Chen, Intel</contributor>
+    <contributor>Yunchao He,   Intel</contributor>
     <contributor>Members of the WebGL working group</contributor>
   </contributors>
 
@@ -307,133 +303,411 @@ interface WEBGL_es31 {
   <!-- New DOM Interface -->
   <h3>WebGLProgramPipeline</h3>
 
-  <h3>More Binding Point</h3>
-
-  <h3>Getting and Setting State</h3>
-
-    <h3> Attributes</h3>
-    <h3> Setting and getting state</h3>
-    <h3> Buffer Object</h3>
-    <h3> Renderbuffer Object</h3>
-
   <newfun>
     <p> <code>Framebuffer Object</code> </p>
-  void framebufferParameteri(GLenum target, GLenum pname, GLint param);
-  void getFramebufferParameteriv(GLenum target, GLenum pname, GLint *params);
-    <function name="FramebufferParameter" type="void">   description </function>
-    <function name="GetFramebufferParameter" type="void">   description </function>
-  </newfun>
-
-  <newfun>
-    <function name="loseContext" type="void">   description </function>
+    <function name="framebufferParameter" type="void">
+      <param name="target" type="GLenum"/>
+      <param name="pname" type="GLenum"/>
+      <param name="param" type="GLint"/>
+      Set framebuffer default parameter. See glFramebufferParameteri at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-9.2.1">
+          OpenGL ES 3.1 Section 9.2.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glFramebufferParameteri.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getFramebufferParameter" type="any">
+      <param name="target" type="GLenum"/>
+      <param name="pname" type="GLenum"/>
+      Query framebuffer default parameter. See glGetFramebufferParameteriv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-9.2.3">
+          OpenGL ES 3.1 Section 9.2.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetFramebufferParameteriv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Texture Object</code> </p>
-  void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
-                               GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
-  void getTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params);
-  void getTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params);
-    <function name="TexStorage2DMultisample" type="void">   description </function>
-    <function name="GetTexLevelParameter" type="void">   description </function>
+    <function name="texStorage2DMultisample" type="void">
+      <param name="target" type="GLenum"/>
+      <param name="samples" type="GLsizei"/>
+      <param name="internalformat" type="GLenum"/>
+      <param name="width" type="GLsizei"/>
+      <param name="height" type="GLsizei"/>
+      <param name="fixedSampleLocations" type="GLboolean"/>
+      Establish the data storage, format, dimensions, and number of samples of a multisample
+      texture's image. See glTexStorage2DMultisample at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-8.8">
+          OpenGL ES 3.1 Section 8.8</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glTexStorage2DMultisample.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getTexLevelParameter" type="any">
+      <param name="target" type="GLenum"/>
+      <param name="lod" type="GLint"/>
+      <param name="value" type="GLenum"/>
+      Query the level-of-detail information of the given pname for the currently bound texture
+      specified by target. See glGetTexLevelParameter{if}v at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-8.10.3">
+          OpenGL ES 3.1 Section 8.10.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetTexLevelParameter.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+      <br/>
+      The requested pname and its return type are given in the following table:
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_FIXED_SAMPLE_LOCATIONS</td><td>GLboolean</td></tr>
+        <tr><td>TEXTURE_WIDTH</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_HEIGHT</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_DEPTH</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_INTERNAL_FORMAT</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_RED_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_GREEN_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_BLUE_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_ALPHA_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_DEPTH_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_STENCIL_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_SHARED_SIZE</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_RED_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_GREEN_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_BLUE_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_ALPHA_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_DEPTH_TYPE</td><td>GLenum</td></tr>
+        <tr><td>TEXTURE_COMPRESSED</td><td>GLboolean</td></tr>
+      </table>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Sampler Object</code> </p>
-  void getMultisamplefv(GLenum pname, GLuint index, GLfloat *val);
-  void sampleMaski(GLuint maskNumber, GLbitfield mask);
-    <function name="GetMultisamplefv" type="void">   description </function>
-    <function name="SampleMaski" type="void">   description </function>
+    <function name="getMultisample" type="any">
+      <param name="pname" type="GLenum"/>
+      <param name="index" type="GLuint"/>
+      Query the location of a given sample within the pixel. See glGetMultisamplefv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-13.2.1">
+          OpenGL ES 3.1 Section 13.2.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetMultisamplefv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="sampleMask" type="void">
+      <param name="index" type="GLuint"/>
+      <param name="mask" type="GLbitfield"/>
+      Specify the sample mask value to mask for desired mask of index. See glSampleMaski at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-13.6.3">
+          OpenGL ES 3.1 Section 13.6.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glSampleMaski.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
-    <p> <code>Programs and Shaders</code> </p>
-  ProgramParameter(GLuint program, GLenum pname, GLint value); -- This one is interesting... ES 3.0 API in fact
-  ?? void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);
-  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name);
-  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
-                              GLsizei bufSize, GLsizei *length, GLchar *name);
-  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
-                            GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params);
-  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);
-  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);
-  void activeShaderProgram(GLuint pipeline, GLuint program);
-  GLuint createShaderProgramv(GLenum type, GLsizei count, const GLchar *const*strings);
-    <function name="UseProgramStages" type="void">   description </function>
-    <function name="ActiveShaderProgram" type="void">   description </function>
-    <function name="CreateShaderProgramv" type="void">   description </function>
+    <p> <code>Programs, Shaders and Program Pipelines</code> </p>
+    <function name="programParameter" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="pname" type="GLenum"/>
+      <param name="value" type="GLint"/>
+      Set program parameter given a program. The only support parameter is PROGRAM_SEPARABLE. See glProgramParameteri at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3">
+          OpenGL ES 3.1 Section 7.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramParameteri.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="createShaderProgram" type="void">
+      <param name="pipeline" type="GLuint"/>
+      <param name="program" type="GLuint"/>
+      Create a standalone separable program from an array of null-terminated source code string for a single shader type. See glCreateShaderProgramv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3">
+          OpenGL ES 3.1 Section 7.3</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glCreateShaderProgramv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="createProgramPipeline" type="WebGLProgramPipeline?">
+	  Create a WebGLProgramPipeline object and initialize it with a program pipeline name like genProgramPipelines. See glGenProgramPipelines at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGenProgramPipelines.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="deleteProgramPipelines" type="void">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+	  Delete a WebGLProgramPipeline object <code>pipeline</code>. See glDeleteProgramPipelines at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glDeleteProgramPipelines.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="bindProgramPipeline" type="void">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+	  Bind a WebGLProgramPipeline object <code>pipeline</code>. See glBindProgramPipeline at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glBindProgramPipeline.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="isProgramPipeline" type="[WebGLHandlesContextLoss] GLboolean">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+	  Return true if the passed WebGLProgramPipeline is valid and false otherwise. See glIsProgramPipeline at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glIsProgramPipeline.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="activeShaderProgram" type="void">
+      <param name="pipeline" type="GLuint"/>
+      <param name="program" type="GLuint"/>
+	  Set the linked named by <code>program</code> to be the active program used for uniform updates  for the program pipeline object <code>pipeline</code>. See glActiveShaderProgram at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glActiveShaderProgram.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="useProgramStages" type="void">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+      <param name="stages" type="GLbitfield"/>
+      <param name="program" type="WebGLProgram?"/>
+	  Associate one or more shader stages in program <code>program</code> with the program pipeline <code>pipeline</code>. See glUseProgramStages at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
+          OpenGL ES 3.1 Section 7.4</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glIsProgramStages.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="validateProgramPipeline" type="void">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+	  Validate the program pipeline object <code>pipeline</code> against the current GL state. See glValidateProgramPipeline at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-11.1.3.11">
+          OpenGL ES 3.1 Section 11.1.3.11</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glValidateProgramPipeline.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramPipelineInfoLog" type="DOMString?">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+	  Return program pipeline infomation log give <code>pipeline</code>. See glGetProgramPipelineInfoLog at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.12">
+          OpenGL ES 3.1 Section 7.12</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glIsProgramPipeline.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramPipelineParameter" type="any">
+      <param name="pipeline" type="WebGLProgramPipeline?"/>
+      <param name="pname" type="GLenum"/>
+	  Query program pipeline parameter <code>pname</code> give <code>pipeline</code>. See glGetProgramPipelineiv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.12">
+          OpenGL ES 3.1 Section 7.12</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramPipelineiv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+      <br/>
+      The requested pname and its return type are given in the following table:
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>ACTIVE_PROGRAM</td><td>GLint</td></tr>
+        <tr><td>VALIDATE_STATUS</td><td>GLboolean</td></tr>
+      </table>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Uniforms and Attributes</code> </p>
-  void programUniform1i(GLuint program, GLint location, GLint v0);
-  void programUniform2i(GLuint program, GLint location, GLint v0, GLint v1);
-  void programUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);
-  void programUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
-
-  void programUniform1ui(GLuint program, GLint location, GLuint v0);
-  void programUniform2ui(GLuint program, GLint location, GLuint v0, GLuint v1);
-  void programUniform3ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2);
-  void programUniform4ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
-
-  void programUniform1f(GLuint program, GLint location, GLfloat v0);
-  void programUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
-  void programUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
-  void programUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
-
-  void programUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-
-  void programUniform1uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform2uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform3uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform4uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-
-  void programUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-
-  void programUniformMatrix2fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-
-  void bindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
-  void vertexAttribFormat(GLuint attribindex, GLint size, GLenum type,
-                          GLboolean normalized, GLuint relativeoffset);
-  void vertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
-  void vertexAttribBinding(GLuint attribindex, GLuint bindingindex);
-  void vertexBindingDivisor(GLuint bindingindex, GLuint divisor);
-    <function name="ProgramUniform" type="void">   description </function>
-    <function name="ProgramUniformMatrix" type="void">   description </function>
+    <function name="programUniform[1234][if]" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniform[1234][if] at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="programUniform[1234][if]v" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniform[1234][if]v at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="programUniform[1234]ui" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniform[1234]ui at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="programUniform[1234]uiv" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniform[1234]uiv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="programUniformMatrix[234][f]v" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+      <param name="count" type="GLsizei"/>
+      <param name="transpose" type="GLboolean"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniform[234][f]v at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="programUniformMatrix[2x3, 3x2, 2x4, 4x2, 3x4, 4x3][f]v" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="location" type="WebGLUniformLocation?"/>
+      <param name="count" type="GLsizei"/>
+      <param name="transpose" type="GLboolean"/>
+	  <param name="..."/>
+      Set uniform value for a given program. See glProgramUniformMatirx[2x3, 3x2, 2x4, 4x2, 3x4, 4x3][f]v at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.6.1">
+          OpenGL ES 3.1 Section 7.6.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glProgramUniform.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="bindVertexBuffer" type="void">
+      <param name="bindingindex" type="GLuint"/>
+      <param name="offset" type="GLintptr"/>
+      <param name="stride" type="GLsizei"/>
+	  Bind vertex buffer to the binding point <code>bindingindex</code>. See glBindVertexBuffer at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.3.1">
+          OpenGL ES 3.1 Section 10.3.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glBindVertexBuffer.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="vertexAttribFormat" type="void">
+      <param name="attribindex" type="GLuint"/>
+      <param name="size" type="GLint"/>
+      <param name="type" type="GLenum"/>
+      <param name="normalized" type="GLboolean"/>
+      <param name="relativeoffset" type="GLuint"/>
+	  Describe the orgnization of vertex arrays. See glVertexAttribFormat at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.3.1">
+          OpenGL ES 3.1 Section 10.3.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glVertexAttribFormat.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="vertexAttribIFormat" type="void">
+      <param name="attribindex" type="GLuint"/>
+      <param name="size" type="GLint"/>
+      <param name="type" type="GLenum"/>
+      <param name="relativeoffset" type="GLuint"/>
+	  Describe the orgnization of vertex arrays. See glVertexAttribIFormat at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.3.1">
+          OpenGL ES 3.1 Section 10.3.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glVertexAttribIFormat.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="vertexAttribBinding" type="void">
+      <param name="attribindex" type="GLuint"/>
+      <param name="bindingindex" type="GLuint"/>
+	  Set the association between a vertex attribute and the vertex buffer binding. See glVertexAttribBinding at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.3.1">
+          OpenGL ES 3.1 Section 10.3.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glVertexAttribBinding.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="vertexBindingDivisor" type="void">
+      <param name="bindingindex" type="GLuint"/>
+      <param name="divisor" type="GLuint"/>
+	  Set the <code>advisor</code> value for attributes taken from the buffer bound to <code>bindingindex</code> between a vertex attribute and the vertex buffer binding. See glVertexBindingDivisor at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.3.2">
+          OpenGL ES 3.1 Section 10.3.2</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glVertexBindingDivisor.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Writing to the drawing buffer</code> </p>
-  ?? void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
-  ?? void dispatchComputeIndirect(GLintptr indirect);
-
-  void drawArraysIndirect(GLenum mode, const void *indirect);
-  void drawElementsIndirect(GLenum mode, GLenum type, const void *indirect);
-    <function name="drawArraysIndirect" type="void">   description </function>
-    <function name="drawElementsIndirect" type="void">   description </function>
+    <function name="drawArraysIndirect" type="void">
+      <param name="mode" type="GLenum"/>
+      <param name="offset" type="GLintptr"/>
+	  Draw geometry with vertices by reading parameters via indirect buffer. See glDrawArraysIndirect at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.5">
+          OpenGL ES 3.1 Section 10.5</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glDrawArraysIndirect.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="drawElementsIndirect" type="void">
+      <param name="mode" type="GLenum"/>
+      <param name="type" type="GLenum"/>
+      <param name="offset" type="GLintptr"/>
+	  Draw geometry with indexed vertices by reading parameters via indirect buffer. See glDrawElementsIndirect at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-10.5">
+          OpenGL ES 3.1 Section 10.5</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glDrawElementsIndirect.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
@@ -445,106 +719,263 @@ interface WEBGL_es31 {
   void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
                             GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params);
   GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);
-    <function name="GetProgramInterfaceiv" type="void">   description </function>
-    <function name="GetProgramResourceiv" type="void">   description </function>
-    <function name="GetProgramResourceName" type="void">   description </function>
-    <function name="GetProgramResourceIndex" type="void">   description </function>
-    <function name="GetProgramResourceLocation" type="void">   description </function>
-  </newfun>
-
-  <newfun>
-    <p> <code>Program Pipeline Object</code> </p>
-  void bindProgramPipeline(GLuint pipeline);
-  void deleteProgramPipelines(GLsizei n, const GLuint *pipelines);
-  void genProgramPipelines(GLsizei n, GLuint *pipelines);
-  GLboolean isProgramPipeline(GLuint pipeline);
-  void getProgramPipelineiv(GLuint pipeline, GLenum pname, GLint *params);
-
-  void validateProgramPipeline(GLuint pipeline);
-  void getProgramPipelineInfoLog(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
-
-  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);
-  void activeShaderProgram(GLuint pipeline, GLuint program);
-    <function name="GenProgramPipelines" type="void">   description </function>
-    <function name="DeleteProgramPipelines" type="void">   description </function>
-    <function name="BindProgramPipeline" type="void">   description </function>
-    <function name="IsProgramPipeline" type="void">   description </function>
-    <function name="ValidateProgramPipeline" type="void">   description </function>
-    <function name="GetProgramPipelineInfoLog" type="void">   description </function>
-    <function name="UseProgramStages" type="void">   description </function>
-    <function name="ActiveShaderProgram" type="void">   description </function>
+    <function name="getProgramInterfaceParameter" type="any">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="programInterface" type="GLenum"/>
+      <param name="pname" type="GLenum"/>
+	  Query a property of the interface <code>programInterface</code> in program <code>program</code>. See glGetProgramInterfaceiv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3.1.1">
+          OpenGL ES 3.1 Section 7.3.1.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramInterfaceiv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramResource" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="programInterface" type="GLenum"/>
+      <param name="index" type="GLuint"/>
+      <param name="propCount" type="GLsizei"/>
+      <param name="props" type="GLenum *"/>
+      <param name="bufSize" type="GLsizei"/>
+      <param name="length" type="GLsizei *"/>
+      <param name="params" type="GLint *"/>
+	  Query multiple properties of the interface <code>programInterface</code> in program <code>program</code>. See glGetProgramResourceiv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3.1.1">
+          OpenGL ES 3.1 Section 7.3.1.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramResourceiv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramResourceName" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="programInterface" type="GLenum"/>
+      <param name="index" type="GLuint"/>
+      <param name="bufSize" type="GLsizei"/>
+      <param name="length" type="GLsizei *"/>
+      <param name="params" type="GLint *"/>
+	  Query the name string assigned to the single active resource with an index of <code>index</code> in the interface <code>programInterface</code> in program <code>program</code>. See glGetProgramResourceName at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3.1.1">
+          OpenGL ES 3.1 Section 7.3.1.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramResourceName.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramResourceIndex" type="GLuint">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="programInterface" type="GLenum"/>
+      <param name="name" type="const char *"/>
+	  Query the unsigned integer index assigned to a resource named <code>name</code> in the interface <code>programInterface</code> in program <code>program</code>. See glGetProgramResourceIndex at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3.1.1">
+          OpenGL ES 3.1 Section 7.3.1.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramResourceIndex.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getProgramResourceLocation" type="void">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="programInterface" type="GLenum"/>
+      <param name="name" type="const char *"/>
+	  Query the location assigned to a resource named <code>name</code> in the interface <code>programInterface</code> in program <code>program</code>. See glGetProgramResourceLocation at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3.1.1">
+          OpenGL ES 3.1 Section 7.3.1.1</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramResourceLocation.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Image Object</code> </p>
-  void bindImageTexture(GLuint unit, GLuint texture, GLint level,
-                        GLboolean layered, GLint layer, GLenum access, GLenum format);
-  void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
-    <function name="BindImageTexture" type="void">   description </function>
+    void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
+    <function name="bindImageTexture" type="void">
+      <param name="unit" type="GLuint"/>
+      <param name="texture" type="WebGLTexture?"/>
+      <param name="level" type="GLint"/>
+      <param name="layered" type="GLboolean"/>
+      <param name="layer" type="GLint"/>
+      <param name="access" type="GLenum"/>
+      <param name="format" type="GLenum"/>
+	  Bind a texture to a image unit for image load and store. See glBindImageTexture at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-8.22">
+          OpenGL ES 3.1 Section 8.22</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glBindImageTexture.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="getBooleani_v" type="void">   Check getParameter with WebGL 2.0, add all new pnames </function>
   </newfun>
 
   <newfun>
     <p> <code>Memory Barrier Object</code> </p>
-  void memoryBarrier(GLbitfield barriers);
-  void memoryBarrierByRegion(GLbitfield barriers);
-    <function name="MemoryBarrior" type="void">   description </function>
-    <function name="MemoryBarriorByRegion" type="void">   description </function>
+    <function name="memoryBarrior" type="void">
+      <param name="barriers" type="GLbitfield"/>
+	  Define a barrier ordering the memory transactions issued prior to the command relative to those issued after the barrier. See glMemoryBarrier at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.11.2">
+          OpenGL ES 3.1 Section 7.11.2</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glMemoryBarrier.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="memoryBarriorByRegion" type="void">
+      <param name="barriers" type="GLbitfield"/>
+	  With restrictions, define a barrier ordering the memory transactions issued prior to the command relative to those issued after the barrier. See glMemoryBarrier at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.11.2">
+          OpenGL ES 3.1 Section 7.11.2</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glMemoryBarrierByRegion.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <newfun>
     <p> <code>Dispatch Computation</code> </p>
-  ?? void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
-  ?? void dispatchComputeIndirect(GLintptr indirect);
-    <function name="DispatchCompute" type="void">   description </function>
-    <function name="DispatchComputeIndirect" type="void">   description </function>
+    <function name="dispatchCompute" type="void">
+      <param name="num_groups_x" type="GLuint"/>
+      <param name="num_groups_y" type="GLuint"/>
+      <param name="num_groups_z" type="GLuint"/>
+	  Launch one or more work groups and start compute pipeline. See glDispatchCompute at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-17">
+          OpenGL ES 3.1 Section 17</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glDispatchCompute.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
+    <function name="dispatchComputeIndirect" type="void">
+      <param name="offset" type="GLintptr offset"/>
+	  Launch one or more work groups and start compute pipeline, with parameter stored in a buffer from offset <code>offset</code>. See glDispatchComputeIndirect at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-17">
+          OpenGL ES 3.1 Section 17</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glDispatchComputeIndirect.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+    </function>
   </newfun>
 
   <!-- new tokens -->
 
   <newtok>
-    createShader: COMPUTE_SHADER
-    getProgram: PROGRAM_SEPARABLE,
-                COMPUTE_WORK_GROUP_SIZE,
-                ACTIVE_ATOMIC_COUNTER_BUFFERS
-    getParameter and getIndexedParameter:
-                  (see chapter 7.6, atomic counter buffer)
-                  MAX_VERTEX_ATOMIC_COUNTER_BUFFERS,
-                  MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS,
-                  MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS,
-                  MAX_COMBINED_ATOMIC_COUNTER_BUFFERS,
-                  MAX_ATOMIC_COUNTER_BUFFER_BINDINGS,
+    <p> <code>More Shader Type</code> </p>
+    <function name="createShader" type="WebGLShader?">
+      <param name="type" type="GLenum"/>
+      <code>type</code> accept the following parameters.
+      <br/>
+      <table width="30%">
+        <tr><th>type</th></tr>
+        <tr><td>COMPUTE_SHADER</td></tr>
+      </table>
+      <code>COMPUTE_SHADER</code> is also supported by corresponding APIs like <code>createShaderProgram</code>, among other APIs.
+    </function>
+  </newtok>
 
-                  (also see table 6.5 in chapter 6.6.1)
-                  ATOMIC_COUNTER_BUFFER_BINDING
-                  ATOMIC_COUNTER_BUFFER_START
-                  ATOMIC_COUNTER_BUFFER_SIZE
+  <newtok>
+    <p> <code>More Binding Point</code> </p>
+    <function name="bindBuffer" type="void">
+      <param name="target" type="GLenum"/>
+      <param name="buffer" type="WebGLBuffer"/>
+      <code>target</code> accept the following parameters.
+      <br/>
+      <table width="30%">
+        <tr><th>target</th></tr>
+        <tr><td>ATOMIC_COUNTER_BUFFER</td></tr>
+        <tr><td>DISPATCH_INDIRECT_BUFFER</td></tr>
+        <tr><td>DRAW_INDIRECT_BUFFER</td></tr>
+        <tr><td>SHADER_STORAGE_BUFFER</td></tr>
+      </table>
+      For <code>bindBufferRange</code> and <code>bindBufferBase</code>, only <code>ATOMIC_COUNTER_BUFFER</code> and <code>SHADER_STORAGE_BUFFER</code> are supported.
+    </function>
+  </newtok>
 
-                  SHADER_STORAGE_BUFFER_BINDING
-                  SHADER_STORAGE_BUFFER_START
-                  SHADER_STORAGE_BUFFER_SIZE
-                  BUFFER_OFFSET_ALIGNMENT
-                  MAX_SHADER_STORAGE_BUFFER_BINDINGS
-
-    bindBuffer/bufferData/bufferSubData/getBufferSubData/getBufferParameter
-    (mapBufferRange, flushMappedBufferRange, UnmapBuffer are not exposed to web):
-        ATOMIC_COUNTER_BUFFER
-        DISPATCH_INDIRECT_BUFFER
-        DRAW_INDIRECT_BUFFER
-        SHADER_STORAGE_BUFFER
-    bindBufferRange and bindBufferBase:
-        ATOMIC_COUNTER_BUFFER
-        SHADER_STORAGE_BUFFER
     BUFFER_ACCESS_FLAGS is not exposed to getBufferParameter, why?
     We only have BUFFER_USAGE and BUFFER_SIZE via getBufferParameter
 
-    <function name="GetParameter" type="any"> <param name="pname"
-    type="GLenum"/> description  </function>
-    <function name="BindBuffer" type="any"> <param name="pname"
-    type="GLenum"/> description  </function>
-    <function name="CreateShader" type="any"> <param name="pname"
-    type="GLenum"/> description  </function>
-    <function name="GetProgram" type="any"> <param name="pname"
-    type="GLenum"/> description  </function>
+  <newtok>
+    <p> <code>Setting and Getting State</code> </p>
+    <function name="getParameter" type="any">
+      <param name="pname" type="GLenum"/>
+      <code>pname</code> accept the following parameters.
+      The return type of this method now depends on the parameter queried.
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>SAMPLE_MASK_VALUE</td><td>GLbitfield</td></tr>
+        <tr><td>MAX_SAMPLE_MASK_WORDS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COLOR_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>MAX_DEPTH_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>MAX_INTEGER_SAMPLES</td><td>GLuint</td></tr>
+        <tr><td>TEXTURE_BINDING_2D_MULTISAMPLE</td><td>WebGLTexture</td></tr>
+
+        <tr><td>MAX_VERTEX_ATOMIC_COUNTER_BUFFERS</td><td>GLuint</td></tr>
+		<tr><td>MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS</td><td>GLuint</td></tr>
+		<tr><td>MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COMBINED_ATOMIC_COUNTER_BUFFERS</td><td>GLuint</td></tr>
+        <tr><td>MAX_ATOMIC_COUNTER_BUFFER_BINDINGS</td><td>GLuint</td></tr>
+
+        <tr><td>MAX_VERTEX_ATOMIC_COUNTERS</td><td>GLuint</td></tr>
+        <tr><td>MAX_FRAGMENT_ATOMIC_COUNTERS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COMPUTE_ATOMIC_COUNTERS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COMBINED_ATOMIC_COUNTERS</td><td>GLuint</td></tr>
+
+        <tr><td>ATOMIC_COUNTER_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
+
+        <tr><td>MAX_COMBINED_SHADER_STORAGE_BLOCKS</td><td>GLuint</td></tr>
+        <tr><td>MAX_COMPUTE_SHADER_STORAGE_BLOCKS</td><td>GLuint</td></tr>
+        <tr><td>MAX_FRAGMENT_SHADER_STORAGE_BLOCKS</td><td>GLuint</td></tr>
+        <tr><td>MAX_VERTEX_SHADER_STORAGE_BLOCKS</td><td>GLuint</td></tr>
+        <tr><td>MAX_SHADER_STORAGE_BLOCK_SIZE</td><td>GLuint</td></tr>
+        <tr><td>MAX_SHADER_STORAGE_BUFFER_BINDINGS</td><td>GLuint</td></tr>
+
+        <tr><td>SHADER_STORAGE_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
+
+      </table>
+    </function>
+
+    <function name="getIndexedParameter" type="any">
+      <param name="target" type="GLenum"/>
+      <param name="index" type="GLuint"/>
+      <code>target</code> accept the following parameters.
+      The return type of this method now depends on the parameter queried.
+      <br/>
+      <table width="30%">
+        <tr><th>target</th><th>returned type</th></tr>
+        <tr><td>ATOMIC_COUNTER_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
+        <tr><td>ATOMIC_COUNTER_BUFFER_START</td><td>GLintptr</td></tr>
+        <tr><td>ATOMIC_COUNTER_BUFFER_SIZE</td><td>GLsizeiptr</td></tr>
+
+		<tr><td>SHADER_STORAGE_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
+        <tr><td>SHADER_STORAGE_BUFFER_START</td><td>GLintptr</td></tr>
+        <tr><td>SHADER_STORAGE_BUFFER_SIZE</td><td>GLsizeiptr</td></tr>
+      </table>
+    </function>
+    <function name="getProgramParameter" type="any">
+      <param name="program" type="WebGLProgram?"/>
+      <param name="pname" type="GLenum"/>
+	  Query program parameter <code>pname</code> give <code>program</code>. See glGetProgramiv at
+      <span class="gl-spec">
+        <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.12">
+          OpenGL ES 3.1 Section 7.12</a>,
+        and <a href="https://www.khronos.org/registry/OpenGL-Refpages/es3.1/html/glGetProgramiv.xhtml"
+          class="nonnormative">man page</a>
+      </span>
+      <br/>
+      The requested pname and its return type are given in the following table:
+      <br/>
+      <table width="30%">
+        <tr><th>pname</th><th>returned type</th></tr>
+        <tr><td>PROGRAM_SEPRARABLE</td><td>GLboolean</td></tr>
+        <tr><td>COMPUTE_WORK_GROUP_SIZE</td><td>GLint</td></tr>
+        <tr><td>ACTIVE_ATOMIC_COUNTER_BUFFERS</td><td>GLint</td></tr>
+      </table>
+    </function>
   </newtok>
 
   <!-- Refer to the <http://www.opengl.org/registry/doc/template.txt> OpenGL
@@ -562,13 +993,27 @@ interface WEBGL_es31 {
   <!-- New Implementation-Dependent State -->
 
   <diffwebgl2>
- <p>This extension can support GLSL ES 310</p>
+	  <h3>This extension can support GLSL ES 310</h3>
+
+	  <h3>Integer format renderbuffer</h3>
+	  <p> Renderbuffer can support integer format via RenderbufferStorage() </p>
 
   </diffwebgl2>
 
   <diffes31>
- <p>The image in shader</p>
+	<h3>Resource usage limitation in shader </h3>
+    <p>shader storage buffer, atomic counter buffer and image unit can be used in vertex shader, fragment shader and compute shader. 
+	  But in HLSL, the corresponding resources are only accessed by pixel shader and compute shader. So this extension limit these
+	  resource access to fragment shader and compute shader.
+    </p>
 
+    <h3>gl_HelperInvocation issue </h3>
+	<p>gl_HelperInvocation is a built-in input variable of fragment shader introduced in ESSL 310 (Chapter 7.1.2 Page 106). It needs
+      at least GLSL 450 on desktop OpenGL, and it has no equivalent in HLSL system values in D3D11.
+    </p>
+
+    <h3> Paticular numbers in compute shader </h3>
+    <p>Define the const and non-const behavior for some corner case like NaN, Inf, 0.0 in compute shader</p>
   </diffes31>
 
   <samplecode>
@@ -587,7 +1032,7 @@ interface WEBGL_es31 {
          for an example.
     -->
 
-    <revision date="2018/2/21">
+    <revision date="2017/9/19">
       <!-- a list of changes -->
 
       <change>This initial version</change>
