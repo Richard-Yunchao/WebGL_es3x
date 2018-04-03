@@ -17,7 +17,7 @@
 
   <overview>
     <!-- use mirrors if this extension wraps another -->
-    <p>This extension exposes OpenGL ES 3.1 features to WebGL.</p>
+    <p>This extension exposes OpenGL ES 3.1 and ESSL 310 features to WebGL.</p>
     <p>This document mainly list the differences with WebGL 2 and OpenGL ES 3.1.</p>
   </overview>
 
@@ -199,98 +199,98 @@ interface WEBGL_es31 {
   const GLenum  GL_MAX_VERTEX_ATTRIB_STRIDE                   = 0x82E5
 
   void dispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
-  void dispatchComputeIndirect(GLintptr indirect);
+  void dispatchComputeIndirect(GLintptr offset);
 
-  void drawArraysIndirect(GLenum mode, const void *indirect);
-  void drawElementsIndirect(GLenum mode, GLenum type, const void *indirect);
+  void drawArraysIndirect(GLenum mode, GLintptr offset);
+  void drawElementsIndirect(GLenum mode, GLenum type, GLintptr offset);
 
-  void framebufferParameteri(GLenum target, GLenum pname, GLint param);
-  void getFramebufferParameteriv(GLenum target, GLenum pname, GLint *params);
+  void framebufferParameter(GLenum target, GLenum pname, GLint param);
+  any getFramebufferParameter(GLenum target, GLenum pname);
 
-  void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);  // 7.3.1 program interface
-  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name); // 7.3.1 program interface
-  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+  void getProgramInterfaceiv(WebGLProgram? program, GLenum programInterface, GLenum pname, GLint *params);  // 7.3.1 program interface
+  GLuint getProgramResourceIndex(WebGLProgram? program, GLenum programInterface, const GLchar *name); // 7.3.1 program interface
+  void getProgramResourceName(WebGLProgram? program, GLenum programInterface, GLuint index,
                               GLsizei bufSize, GLsizei *length, GLchar *name);  // 7.3.1 program interface
-  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+  void getProgramResourceiv(WebGLProgram? program, GLenum programInterface, GLuint index,
                             GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params); // 7.3.1 program interface
-  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);  // 7.3.1 program interface
+  GLint getProgramResourceLocation(WebGLProgram? program, GLenum programInterface, const GLchar *name);  // 7.3.1 program interface
 
-  void bindProgramPipeline(GLuint pipeline);  // 7.4 program pipeline object
-  void deleteProgramPipelines(GLsizei n, const GLuint *pipelines);  // 7.4 program pipeline object
-  void genProgramPipelines(GLsizei n, GLuint *pipelines);  // 7.4 program pipeline object
-  GLboolean isProgramPipeline(GLuint pipeline);  // 7.4 program pipeline object
-  void getProgramPipelineiv(GLuint pipeline, GLenum pname, GLint *params);  // 7.12 shader, program, and program pipelie queries
-  void useProgramStages(GLuint pipeline, GLbitfield stages, GLuint program);  // 7.4 program pipeline
-  void activeShaderProgram(GLuint pipeline, GLuint program);  // 7.4 program pipeline
-  GLuint createShaderProgramv(GLenum type, GLsizei count, const GLchar *const*strings); // 7.3 program object
+  void programParameter(WebGLProgram? program, GLenum pname, GLint value);
+  GLuint createShaderProgram(GLenum type, GLsizei count, DOMString source); // 7.3 program object
+  WebGLProgramPipeline? createProgramPipeline();
+  void deleteProgramPipeline(WebGLProgramPipeline? pipeline);  // 7.4 program pipeline object
+  void bindProgramPipeline(WebGLProgramPipeline? pipeline);  // 7.4 program pipeline object
+  [WebGLHandlesContextLoss] GLboolean isProgramPipeline(WebGLProgramPipeline? pipeline);  // 7.4 program pipeline object
+  void activeShaderProgram(WebGLProgramPipeline? pipeline, WebGLProgram? program);  // 7.4 program pipeline
+  void useProgramStages(WebGLProgramPipeline? pipeline, GLbitfield stages, WebGLProgram? program);  // 7.4 program pipeline
+  void validateProgramPipeline(WebGLProgramPipeline? pipeline);
+  DOMString? getProgramPipelineInfoLog(WebGLProgramPipeline? pipeline); // 7.12
+  any getProgramPipelineParameter(WebGLProgramPipeline? pipeline, GLenum pname);  // 7.12 shader, program, and program pipelie queries
 
-  void programUniform1i(GLuint program, GLint location, GLint v0);  // 7.6.1 uniform variables
-  void programUniform2i(GLuint program, GLint location, GLint v0, GLint v1);  // 7.6.1
-  void programUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2);  // 7.6.1
-  void programUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);  // 7.6.1
+  void programUniform1i(WebGLProgram? program, WebGLUniformLocation? location, GLint v0);  // 7.6.1 uniform variables
+  void programUniform2i(WebGLProgram? program, WebGLUniformLocation? location, GLint v0, GLint v1);  // 7.6.1
+  void programUniform3i(WebGLProgram? program, WebGLUniformLocation? location, GLint v0, GLint v1, GLint v2);  // 7.6.1
+  void programUniform4i(WebGLProgram? program, WebGLUniformLocation? location, GLint v0, GLint v1, GLint v2, GLint v3);  // 7.6.1
 
-  void programUniform1ui(GLuint program, GLint location, GLuint v0);
-  void programUniform2ui(GLuint program, GLint location, GLuint v0, GLuint v1);
-  void programUniform3ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2);
-  void programUniform4ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
+  void programUniform1ui(WebGLProgram? program, WebGLUniformLocation? location, GLuint v0);
+  void programUniform2ui(WebGLProgram? program, WebGLUniformLocation? location, GLuint v0, GLuint v1);
+  void programUniform3ui(WebGLProgram? program, WebGLUniformLocation? location, GLuint v0, GLuint v1, GLuint v2);
+  void programUniform4ui(WebGLProgram? program, WebGLUniformLocation? location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
 
-  void programUniform1f(GLuint program, GLint location, GLfloat v0);
-  void programUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1);
-  void programUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
-  void programUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+  void programUniform1f(WebGLProgram? program, WebGLUniformLocation? location, GLfloat v0);
+  void programUniform2f(WebGLProgram? program, WebGLUniformLocation? location, GLfloat v0, GLfloat v1);
+  void programUniform3f(WebGLProgram? program, WebGLUniformLocation? location, GLfloat v0, GLfloat v1, GLfloat v2);
+  void programUniform4f(WebGLProgram? program, WebGLUniformLocation? location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
 
-  void programUniform1iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform2iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform3iv(GLuint program, GLint location, GLsizei count, const GLint *value);
-  void programUniform4iv(GLuint program, GLint location, GLsizei count, const GLint *value);
+  void programUniform1iv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Int32List data);
+  void programUniform2iv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Int32List data);
+  void programUniform3iv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Int32List data);
+  void programUniform4iv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Int32List data);
 
-  void programUniform1uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform2uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform3uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
-  void programUniform4uiv(GLuint program, GLint location, GLsizei count, const GLuint *value);
+  void programUniform1uiv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Uint32List data);
+  void programUniform2uiv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Uint32List data);
+  void programUniform3uiv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Uint32List data);
+  void programUniform4uiv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Uint32List data);
 
-  void programUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
-  void programUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat *value);
+  void programUniform1fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Float32List data);
+  void programUniform2fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Float32List data);
+  void programUniform3fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Float32List data);
+  void programUniform4fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count, Float32List data);
 
-  void programUniformMatrix2fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4fv(GLuint program, GLint location, GLsizei count,
-                               GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);
-  void programUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count,
-                                 GLboolean transpose, const GLfloat *value);  // 7.6.1 uniform variables
+  void programUniformMatrix2fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                               GLboolean transpose, Float32List data);
+  void programUniformMatrix3fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                               GLboolean transpose, Float32List data);
+  void programUniformMatrix4fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                               GLboolean transpose, Float32List data);
+  void programUniformMatrix2x3fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);
+  void programUniformMatrix3x2fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);
+  void programUniformMatrix2x4fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);
+  void programUniformMatrix4x2fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);
+  void programUniformMatrix3x4fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);
+  void programUniformMatrix4x3fv(WebGLProgram? program, WebGLUniformLocation? location, GLsizei count,
+                                 GLboolean transpose, Float32List data);  // 7.6.1 uniform variables
 
-  void validateProgramPipeline(GLuint pipeline);
-  void getProgramPipelineInfoLog(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog); // 7.12
 
-  void bindImageTexture(GLuint unit, GLuint texture, GLint level,
+  void bindImageTexture(GLuint unit, WebGLTexture? texture, GLint level,
                         GLboolean layered, GLint layer, GLenum access, GLenum format);
-  void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
+
   void memoryBarrier(GLbitfield barriers);  // 7.11 shader memory access
   void memoryBarrierByRegion(GLbitfield barriers);  // 7.11 shader memory access
 
   void texStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
                                GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
-  void getMultisamplefv(GLenum pname, GLuint index, GLfloat *val);
-  void sampleMaski(GLuint maskNumber, GLbitfield mask);
+  any getTexLevelParameter(GLenum target, GLint level, GLenum pname);
+  any getMultisample(GLenum pname, GLuint index);
+  void sampleMask(GLuint index, GLbitfield mask);
 
-  void getTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params);
-  void getTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params);
 
-  void bindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
+  void bindVertexBuffer(GLuint bindingindex, WebGLBuffer? buffer, GLintptr offset, GLsizei stride);
   void vertexAttribFormat(GLuint attribindex, GLint size, GLenum type,
                           GLboolean normalized, GLuint relativeoffset);
   void vertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
@@ -350,7 +350,7 @@ interface WEBGL_es31 {
     </function>
     <function name="getTexLevelParameter" type="any">
       <param name="target" type="GLenum"/>
-      <param name="lod" type="GLint"/>
+      <param name="level" type="GLint"/>
       <param name="value" type="GLenum"/>
       Query the level-of-detail information of the given pname for the currently bound texture
       specified by target. See glGetTexLevelParameter{if}v at
@@ -429,8 +429,9 @@ interface WEBGL_es31 {
       </span>
     </function>
     <function name="createShaderProgram" type="void">
-      <param name="pipeline" type="GLuint"/>
-      <param name="program" type="GLuint"/>
+      <param name="type" type="GLenum"/>
+      <param name="count" type="GLsizei"/>
+      <param name="source" type="DOMString"/>
       Create a standalone separable program from an array of null-terminated source code string for a single shader type. See glCreateShaderProgramv at
       <span class="gl-spec">
         <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.3">
@@ -448,7 +449,7 @@ interface WEBGL_es31 {
           class="nonnormative">man page</a>
       </span>
     </function>
-    <function name="deleteProgramPipelines" type="void">
+    <function name="deleteProgramPipeline" type="void">
       <param name="pipeline" type="WebGLProgramPipeline?"/>
 	  Delete a WebGLProgramPipeline object <code>pipeline</code>. See glDeleteProgramPipelines at
       <span class="gl-spec">
@@ -479,8 +480,8 @@ interface WEBGL_es31 {
       </span>
     </function>
     <function name="activeShaderProgram" type="void">
-      <param name="pipeline" type="GLuint"/>
-      <param name="program" type="GLuint"/>
+      <param name="pipeline" type="WebGLProgramPipeline"/>
+      <param name="program" type="WebGLProgram"/>
 	  Set the linked named by <code>program</code> to be the active program used for uniform updates  for the program pipeline object <code>pipeline</code>. See glActiveShaderProgram at
       <span class="gl-spec">
         <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-7.4">
@@ -622,6 +623,7 @@ interface WEBGL_es31 {
     </function>
     <function name="bindVertexBuffer" type="void">
       <param name="bindingindex" type="GLuint"/>
+      <param name="buffer" type="WebGLBuffer?"/>
       <param name="offset" type="GLintptr"/>
       <param name="stride" type="GLsizei"/>
 	  Bind vertex buffer to the binding point <code>bindingindex</code>. See glBindVertexBuffer at
@@ -712,13 +714,13 @@ interface WEBGL_es31 {
 
   <newfun>
     <p> <code>Program Interface Query</code> </p>
-  ?? void getProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint *params);
-  GLuint getProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name);
-  void getProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+  ?? void getProgramInterfaceiv(WebGLProgram? program, GLenum programInterface, GLenum pname, GLint *params);
+  GLuint getProgramResourceIndex(WebGLProgram? program, GLenum programInterface, const GLchar *name);
+  void getProgramResourceName(WebGLProgram? program, GLenum programInterface, GLuint index,
                               GLsizei bufSize, GLsizei *length, GLchar *name);
-  void getProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+  void getProgramResourceiv(WebGLProgram? program, GLenum programInterface, GLuint index,
                             GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params);
-  GLint getProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name);
+  GLint getProgramResourceLocation(WebGLProgram? program, GLenum programInterface, const GLchar *name);
     <function name="getProgramInterfaceParameter" type="any">
       <param name="program" type="WebGLProgram?"/>
       <param name="programInterface" type="GLenum"/>
@@ -791,7 +793,6 @@ interface WEBGL_es31 {
 
   <newfun>
     <p> <code>Image Object</code> </p>
-    void getBooleani_v(GLenum target, GLuint index, GLboolean *data);
     <function name="bindImageTexture" type="void">
       <param name="unit" type="GLuint"/>
       <param name="texture" type="WebGLTexture?"/>
@@ -808,7 +809,6 @@ interface WEBGL_es31 {
           class="nonnormative">man page</a>
       </span>
     </function>
-    <function name="getBooleani_v" type="void">   Check getParameter with WebGL 2.0, add all new pnames </function>
   </newfun>
 
   <newfun>
@@ -850,7 +850,7 @@ interface WEBGL_es31 {
       </span>
     </function>
     <function name="dispatchComputeIndirect" type="void">
-      <param name="offset" type="GLintptr offset"/>
+      <param name="offset" type="GLintptr"/>
 	  Launch one or more work groups and start compute pipeline, with parameter stored in a buffer from offset <code>offset</code>. See glDispatchComputeIndirect at
       <span class="gl-spec">
         <a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf#nameddest=section-17">
@@ -907,7 +907,6 @@ interface WEBGL_es31 {
       <br/>
       <table width="30%">
         <tr><th>pname</th><th>returned type</th></tr>
-        <tr><td>SAMPLE_MASK_VALUE</td><td>GLbitfield</td></tr>
         <tr><td>MAX_SAMPLE_MASK_WORDS</td><td>GLuint</td></tr>
         <tr><td>MAX_COLOR_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
         <tr><td>MAX_DEPTH_TEXTURE_SAMPLES</td><td>GLuint</td></tr>
@@ -947,13 +946,30 @@ interface WEBGL_es31 {
       <br/>
       <table width="30%">
         <tr><th>target</th><th>returned type</th></tr>
+		<tr><td>VERTEX_BINDING_OFFSET</td><td>GLintptr</td></tr>
+		<tr><td>VERTEX_BINDING_STRIDE</td><td>GLint</td></tr>
+		<tr><td>VERTEX_BINDING_DIVISOR</td><td>GLint</td></tr>
+		<tr><td>VERTEX_BINDING_BUFFER</td><td>WebGLBuffer</td></tr>
+
+		<tr><td>SAMPLE_MASK_VALUE</td><td>GLbitfield</td></tr>
+
         <tr><td>ATOMIC_COUNTER_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
         <tr><td>ATOMIC_COUNTER_BUFFER_START</td><td>GLintptr</td></tr>
         <tr><td>ATOMIC_COUNTER_BUFFER_SIZE</td><td>GLsizeiptr</td></tr>
 
+		<tr><td>IMAGE_BINDING_NAME</td><td>WebGLTexture</td></tr>
+		<tr><td>IMAGE_BINDING_LEVEL</td><td>GLint</td></tr>
+		<tr><td>IMAGE_BINDING_LAYERED</td><td>GLboolean</td></tr>
+		<tr><td>IMAGE_BINDING_LAYER</td><td>GLint</td></tr>
+		<tr><td>IMAGE_BINDING_ACCESS</td><td>GLenum</td></tr>
+		<tr><td>IMAGE_BINDING_FORMAT</td><td>GLenum</td></tr>
+
 		<tr><td>SHADER_STORAGE_BUFFER_BINDING</td><td>WebGLBuffer</td></tr>
         <tr><td>SHADER_STORAGE_BUFFER_START</td><td>GLintptr</td></tr>
-        <tr><td>SHADER_STORAGE_BUFFER_SIZE</td><td>GLsizeiptr</td></tr>
+		<tr><td>SHADER_STORAGE_BUFFER_SIZE</td><td>GLsizeiptr</td></tr>
+
+		<tr><td>MAX_COMPUTE_WORK_GROUP_COUNT</td><td>GLint</td></tr>
+		<tr><td>MAX_COMPUTE_WORK_GROUP_SIZE</td><td>GLint</td></tr>
       </table>
     </function>
     <function name="getProgramParameter" type="any">
